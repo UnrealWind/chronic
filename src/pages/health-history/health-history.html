@@ -1,0 +1,107 @@
+<!--
+  Generated template for the HealthHistoryPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ navParams.data.title }}的历史记录</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content >
+  <ion-list *ngIf="historyList" class="history-list">
+    <div [ngSwitch]="currHisType">
+      <!-- 血氧 -->
+      <div *ngSwitchCase="9">
+        <ion-item class="list-item"
+                  *ngFor="let item of historyList">
+          <span class="item-span">{{item.time}}</span>
+          <span class="item-span">{{item.spoValue}}%</span>
+
+          <span [ngSwitch]="item.level">
+            <span *ngSwitchCase="0" class="item-span">低氧血症</span>
+            <span *ngSwitchCase="1" class="item-span">失饱和状态</span>
+            <span *ngSwitchCase="2" class="item-span">正常</span>
+          </span>
+        </ion-item>
+      </div>
+
+      <!-- 血脂 -->
+      <div *ngSwitchCase="7">
+        <ion-item class="list-item"
+                  *ngFor="let item of historyList">
+          <span class="item-span">{{item.time}}</span>
+
+          <span [ngSwitch]="item.level">
+            <span *ngSwitchCase="1" class="item-span">正常</span>
+            <span *ngSwitchCase="2" class="item-span">异常</span>
+          </span>
+        </ion-item>
+      </div>
+
+      <!-- 体温 -->
+      <div *ngSwitchCase="14">
+        <ion-item class="list-item"
+                  *ngFor="let item of historyList">
+          <span class="item-span">{{item.time}}</span>
+          <span class="item-span">{{item.bodyTemperature}}</span>
+
+          <span [ngSwitch]="item.level">
+            <span *ngSwitchCase="1" class="item-span">正常</span>
+            <span *ngSwitchCase="2" class="item-span">低热</span>
+            <span *ngSwitchCase="3" class="item-span">中度发热</span>
+            <span *ngSwitchCase="4" class="item-span">高热</span>
+          </span>
+        </ion-item>
+      </div>
+
+      <!-- 身体 -->
+      <div *ngSwitchCase="6">
+        <ion-item class="list-item"
+                  *ngFor="let item of historyList">
+          <span class="item-span">{{item.time}}</span>
+          <span class="item-span">{{item.bmi}}</span>
+        </ion-item>
+      </div>
+
+      <!-- 血压 -->
+      <div *ngSwitchCase="1">
+        <ion-item class="list-item"
+                  *ngFor="let item of historyList">
+          <p class="wrap-line">
+            <span class="item-span">{{item.time}}</span>
+            <span class="item-span">收缩压(高压):{{item.highValue}}</span>
+            <span class="item-span">舒张压(低压):{{item.lowValue}}</span>
+
+            <span [ngSwitch]="item.level">
+              <span *ngSwitchCase="-1" class="item-span">偏低</span>
+              <span *ngSwitchCase="0" class="item-span">正常</span>
+              <span *ngSwitchCase="1" class="item-span">正常高值</span>
+              <span *ngSwitchCase="2" class="item-span">1级高血压</span>
+              <span *ngSwitchCase="3" class="item-span">2级高血压</span>
+              <span *ngSwitchCase="4" class="item-span">3级高血压</span>
+            </span>
+          </p>
+        </ion-item>
+      </div>
+
+      <!-- 心率 -->
+      <div *ngSwitchCase="10">
+        <ion-item class="list-item"
+                  *ngFor="let item of historyList">
+          <span class="item-span">{{item.time}}</span>
+          <span class="item-span">{{item.heartRate}}</span>
+        </ion-item>
+      </div>
+    </div>
+  </ion-list>
+
+  <ion-item *ngIf="!historyList">
+    <h2 class="no-margin-top text-center">暂无数据</h2>
+  </ion-item>
+</ion-content>

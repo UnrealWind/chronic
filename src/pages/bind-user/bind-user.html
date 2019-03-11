@@ -1,0 +1,35 @@
+
+<ion-content >
+  <ion-list radio-group [(ngModel)]="params.cardType">
+    <ion-list-header>
+      <ion-icon name='planet' color="primary"></ion-icon> &nbsp;用户信息绑定
+    </ion-list-header>
+    <ion-item>
+      <ion-label>绑卡</ion-label>
+      <ion-select [(ngModel)]="params.cardType" interface="action-sheet" cancelText="返回">
+        <ion-option value="1">就诊卡</ion-option>
+        <ion-option value="2">社保卡</ion-option>
+        <ion-option value="3">京医卡</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>姓名：</ion-label>
+      <ion-input [(ngModel)]="params.name" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>身份证号：</ion-label>
+      <ion-input [(ngModel)]="params.idcard" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>就诊卡/社保/医保卡号：</ion-label>
+      <ion-input [(ngModel)]="params.cardNo" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <img src="assets/img/card{{params.cardType}}.jpg">
+    </ion-item>
+
+  </ion-list>
+
+  <button ion-button block (click)="bind()">绑定</button>
+
+</ion-content>

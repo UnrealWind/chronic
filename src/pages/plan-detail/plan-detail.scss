@@ -1,0 +1,19 @@
+page-plan-detail {
+  .cal-month-view .cal-day-cell {
+    min-height: 60px;
+  }
+
+  /*这个用的时候发现，在月份切换的时候，这个框框里的内容隐藏了但是框还在，目测应该是版本问题，这里强行样式解决*/
+  .cal-month-view .cal-open-day-events  {
+    padding: 0;
+    >div {
+      padding:3px 10px;
+    }
+    >div:first-child {
+      padding-top:10px;
+    }
+    >div:last-child {
+      padding-bottom:10px;
+    }
+  }
+}

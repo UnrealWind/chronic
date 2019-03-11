@@ -1,0 +1,67 @@
+<ion-content >
+  <ion-list>
+    <ion-list-header>
+      <ion-icon name='planet' color="primary"></ion-icon> &nbsp;个体化方案
+      <button ion-button round item-end (click)="goPlanDetail()">查看方案详情</button>
+    </ion-list-header>
+  </ion-list>
+  <ion-segment [(ngModel)]="lists"
+               (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="全部">
+      全部
+    </ion-segment-button>
+    <ion-segment-button value="住院">
+      住院
+    </ion-segment-button>
+    <ion-segment-button value="门诊">
+      门诊
+    </ion-segment-button>
+    <ion-segment-button value="体检">
+      体检
+    </ion-segment-button>
+    <ion-segment-button value="个体化方案">
+      个体化方案
+    </ion-segment-button>
+  </ion-segment>
+
+
+  <div [ngSwitch]="lists">
+    <!-- 全部 -->
+    <ion-list *ngSwitchCase="'全部'">
+      <div *ngIf="allGroup">
+        <ion-item *ngFor="let group of allGroup"
+                  (click)="goPlanDetail()">
+          <h2 class="no-margin-top">{{ group.schemeGroupName }}</h2>
+          <ion-icon color="primary" name="ios-arrow-forward-outline" item-end></ion-icon>
+        </ion-item>
+      </div>
+
+      <ion-item *ngIf="!allGroup">
+        <h2 class="text-center">暂无数据</h2>
+      </ion-item>
+    </ion-list>
+
+    <!-- 个体化方案 -->
+    <ion-list *ngSwitchCase="'个体化方案'" class="custom-plan-wrapper">
+      <div *ngIf="patiPlan">
+        <div *ngFor="let plan of patiPlan" class="plan-item">
+          <ion-list-header class="item-title-wrapper"><ion-icon name="list-box-outline"></ion-icon> <span>{{plan.name}}</span></ion-list-header>
+          <div *ngIf="plan.schemeTemplate.schemeMaterials.length > 0">
+            <ion-item *ngFor="let singleLine of plan.schemeTemplate.schemeMaterials" no-lines>
+                <single-line [preMapLevel]="currGroup.type + '.'  + plan.type + '.content'"
+                             [singleItem]="singleLine"></single-line>
+            </ion-item>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!patiPlan">
+        <ion-item>
+          <h2 class="text-center">暂无数据</h2>
+        </ion-item>
+      </div>
+
+    </ion-list>
+  </div>
+
+</ion-content>

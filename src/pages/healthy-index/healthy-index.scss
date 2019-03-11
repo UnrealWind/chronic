@@ -1,0 +1,48 @@
+page-healthy-index {
+  h2 {
+    font-weight: 300;
+  }
+  ion-list.list-ios {
+    margin-bottom:1.5rem;
+  }
+  .healthData-wrapper {
+    .healthData-row {
+      border-bottom: 1px solid #ccc;
+      padding: 0.7rem 0;
+      .healthData-col {
+        .item-wrapper {
+          text-align: center;
+          .item-title {
+            font-size: 1.8rem;
+          }
+          .item-subtitle {
+            text-align: center;
+            margin-bottom: 0;
+            .item-subtitle-txt-wrapper {
+              display: inline-block;
+              margin-left: .5rem;
+              .content {
+                font-size: 1.3rem;
+              }
+            }
+          }
+
+          .item-detail {
+            font-size: 1.2rem;
+          }
+        }
+      }
+
+      .healthData-col {
+        border-left: 1px solid #ccc;
+      }
+      .healthData-col:first-child {
+        border-left: 0;
+      }
+    }
+    .healthData-row:last-child {
+      border-bottom:0;
+    }
+  }
+
+}

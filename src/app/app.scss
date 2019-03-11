@@ -1,0 +1,30 @@
+@import "../assets/css/reset.scss";
+@import "../assets/css/utils.scss";
+
+ion-app.ios {
+  .content-ios {
+    background-color: #f7f7f7;
+  }
+  ion-list {
+    background-color: #fff;
+    margin-bottom: 1.5rem;
+    box-shadow: #ccc 2px 0 10px;
+  }
+  ion-list-header {
+    font-size:2rem;
+    margin:0 0 0.5rem 0 !important;
+    ion-icon {
+      font-size:2.2rem;
+    }
+  }
+
+  .item-ios .item-button {
+    padding: 1rem 1.5rem;
+    height: 2.5rem;
+    font-size: 1.3rem;
+  }
+
+  .no-margin-top {
+    margin-top:0 !important;
+  }
+}

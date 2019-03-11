@@ -1,0 +1,65 @@
+
+<ion-content >
+  <ion-list class="infi-list">
+    <ion-list-header>
+      <ion-icon name='planet' color="primary"></ion-icon> &nbsp;呼吸健康锻炼
+    </ion-list-header>
+    <ion-item>
+      <ion-label fixed>运动前心率</ion-label>
+      <ion-input type="text" value=""></ion-input>
+    </ion-item>
+    <ion-item class="infi-range">
+      <ion-label>运动前咳嗽程度</ion-label>
+      <ion-range min="0" max="5" pin="true" [(ngModel)]="contrast1" color="secondary">
+        <ion-label range-left class="small-text">无咳嗽</ion-label>
+        <ion-label range-right>一直咳嗽</ion-label>
+      </ion-range>
+    </ion-item>
+    <ion-item class="infi-range">
+      <ion-label>运动前咳痰程度</ion-label>
+      <ion-range min="0" max="5" pin="true" [(ngModel)]="contrast2" color="secondary">
+        <ion-label range-left class="small-text">无痰</ion-label>
+        <ion-label range-right>一直咳痰</ion-label>
+      </ion-range>
+    </ion-item>
+    <ion-item class="infi-range">
+      <ion-label>运动前胸闷程度</ion-label>
+      <ion-range min="0" max="5" pin="true" [(ngModel)]="contrast3" color="secondary">
+        <ion-label range-left class="small-text">无胸闷</ion-label>
+        <ion-label range-right>一直咳嗽</ion-label>
+      </ion-range>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>运动分钟数</ion-label>
+      <ion-input type="text" value=""></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>运动后心率</ion-label>
+      <ion-input type="text" value=""></ion-input>
+    </ion-item>
+    <ion-item class="infi-range">
+      <ion-label>运动后咳嗽程度</ion-label>
+      <ion-range min="0" max="5" pin="true" [(ngModel)]="contrast4" color="secondary">
+        <ion-label range-left class="small-text">无咳嗽</ion-label>
+        <ion-label range-right>一直咳嗽</ion-label>
+      </ion-range>
+    </ion-item>
+    <ion-item class="infi-range">
+      <ion-label>运动后咳痰程度</ion-label>
+      <ion-range min="0" max="5" pin="true" [(ngModel)]="contrast5" color="secondary">
+        <ion-label range-left class="small-text">无痰</ion-label>
+        <ion-label range-right>一直咳痰</ion-label>
+      </ion-range>
+    </ion-item>
+    <ion-item class="infi-range">
+      <ion-label>运动后胸闷程度</ion-label>
+      <ion-range min="0" max="5" pin="true" [(ngModel)]="contrast6" color="secondary">
+        <ion-label range-left class="small-text">无胸闷</ion-label>
+        <ion-label range-right>一直咳嗽</ion-label>
+      </ion-range>
+    </ion-item>
+  </ion-list>
+
+  <button ion-button block (click)="save()">提交</button>
+
+</ion-content>

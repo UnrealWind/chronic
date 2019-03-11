@@ -1,0 +1,28 @@
+<ion-content >
+  <ion-list>
+    <ion-list-header>
+      <ion-icon name='ios-paper-outline' color="primary"></ion-icon>&nbsp;血常规
+      <button ion-button round item-end (click)="back()">返回</button>
+    </ion-list-header>
+    <ion-item>
+      <h2 class="no-margin-top">血常规异常项目</h2>
+      <p style="white-space: normal">白细胞偏高、红细胞偏低、血小板偏高、红细胞比积偏高</p>
+    </ion-item>
+  </ion-list>
+  <table class="table table-bordered">
+    <tbody>
+    <tr>
+      <td>白细胞计数</td>
+      <td>14 10^9/L</td>
+      <td> <ion-icon name="md-arrow-round-up" color="danger"></ion-icon> </td>
+      <td>4~10 10^9/L</td>
+    </tr>
+    <tr>
+      <td>白细胞计数</td>
+      <td>14 10^9/L</td>
+      <td> <ion-icon name="md-arrow-round-down" color="secondary"></ion-icon> </td>
+      <td>4~10 10^9/L</td>
+    </tr>
+    </tbody>
+  </table>
+</ion-content>

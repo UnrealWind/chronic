@@ -1,0 +1,90 @@
+<ion-content >
+  <ion-list class="health-list-wrapper">
+    <ion-list-header>
+      <ion-icon name='ios-paper-outline' color="primary"></ion-icon> &nbsp;健康数据
+      <button ion-button round item-end (click)="goHealthyRecord()">记录</button>
+      <button ion-button round item-end (click)="refreshData()" >刷新数据</button>
+    </ion-list-header>
+    <ion-item *ngIf="!info">
+      <h2 class="no-margin-top">暂无信息，请先进行设备绑定！</h2>
+    </ion-item>
+
+    <ion-grid *ngIf="info" class="healthData-wrapper">
+      <ion-row *ngFor="let rowData of healthDatas"
+               class="healthData-row">
+        <ion-col col-4
+                 class="healthData-col"
+                 *ngFor="let healthData of rowData"
+                 [ngSwitch]="healthData.type"
+                 (click)="getHealthHistory(healthData)">
+          <div *ngSwitchCase="0"
+                class="item-wrapper">
+            <!-- title -->
+            <h2 class="item-title">
+              <ion-icon color="primary" [name]="healthData.title.icon"></ion-icon>
+              <span>{{healthData.title.txt}}</span>
+            </h2>
+
+            <!-- subtitle -->
+            <ul class="item-subtitle">
+              <li *ngFor="let subTitle of healthData.subTitle"
+                  [ngSwitch]="subTitle.type"
+                  class="item-subtitle-txt-wrapper">
+                <div *ngIf="subTitle.val">
+                  <div *ngSwitchCase="0" class="content">
+                    <span class="txt" *ngIf="subTitle.txt">{{subTitle.txt}}：</span>
+                    <span class="val">{{subTitle.val}}</span>
+                  </div>
+
+                  <div *ngSwitchCase="1" class="content">
+                    <span class="txt">{{subTitle.val}}</span>
+                    <span class="val">{{subTitle.txt}}</span>
+                  </div>
+                </div>
+              </li>
+            </ul>
+
+            <!-- detail -->
+            <!--<p class="item-detail"
+                *ngIf="healthData.detail">
+              <span [style.color]="healthData.detail.color">{{healthData.detail.txt}}</span>
+            </p>-->
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-list>
+
+  <ion-list class="infi-list">
+    <ion-list-header>
+      <ion-icon name='ios-contact-outline' color="primary"></ion-icon> &nbsp;个体化方案
+    </ion-list-header>
+
+    <ion-item *ngIf="!fixedHealthPlan">
+      <h2 class="no-margin-top text-center">暂无方案</h2>
+    </ion-item>
+
+    <div *ngIf="fixedHealthPlan">
+      <!-- 未完成 -->
+      <ion-item *ngFor="let single of fixedHealthPlan.waiting; let i = index">
+        <ion-icon color="primary" name='planet' item-start></ion-icon>
+        <h2 class="no-margin-top" style="white-space: normal;">{{single.name}}</h2>
+        <p>频次：<span>{{single.timePoint}}</span><span>{{single.timePointType}}</span><span>{{single.timeValue}} 次</span>
+        </p>
+
+        <button *ngIf="single.statusCode == 'waiting'" ion-button round item-end  (click)="mark(single, index)" >打卡</button>
+
+      </ion-item>
+
+      <!-- 已完成 -->
+      <ion-item *ngFor="let single of fixedHealthPlan.finish">
+        <ion-icon color="primary" name='planet' item-start></ion-icon>
+        <h2 class="no-margin-top" style="white-space: normal;">{{single.name}}</h2>
+        <p>频次：<span>{{single.timePoint}}</span><span>{{single.timePointType}}</span><span>{{single.timeValue}} 次</span>
+        </p>
+
+        <button *ngIf="single.statusCode == 'finish'" ion-button round item-end color="secondary" >已完成</button>
+      </ion-item>
+    </div>
+  </ion-list>
+</ion-content>

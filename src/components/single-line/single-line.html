@@ -1,0 +1,21 @@
+<!-- Generated template for the SingleLineComponent component -->
+<div>
+  <ul class="content-list clearfix">
+    <sort-data [dataPreLevel]="preMapLevel"
+               [singleItem]="singleItem"
+               [(orderMap)]="supOrderMap"></sort-data>
+
+      <li class="list-item fl"
+          *ngFor="let char of supOrderMap"
+          [ngStyle]="char.style">
+          <span *ngIf="typeIs(char.data) != 'array' && char.keyTxt != 'statusCode'">{{char.data}}</span>
+
+        <!-- 递归 -->
+        <div *ngIf="typeIs(char.data) === 'array'">
+          <single-line *ngFor="let subLine of char.data"
+                       [preMapLevel]="preMapLevel + '.interviews.next'"
+                       [singleItem]="subLine"></single-line>
+        </div>
+      </li>
+  </ul>
+</div>

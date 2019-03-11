@@ -1,0 +1,116 @@
+<ion-content >
+  <mwl-demo-utils-calendar-header
+    [locale]="'zh'"
+    [(view)]="view"
+    [(viewDate)]="viewDate">
+  </mwl-demo-utils-calendar-header>
+
+  <div [ngSwitch]="view">
+    <mwl-calendar-month-view
+      [locale]="'zh'"
+      *ngSwitchCase="'month'"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      [activeDayIsOpen]="activeDayIsOpen"
+      (dayClicked)="dayClicked($event.day)"
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)">
+    </mwl-calendar-month-view>
+  </div>
+
+
+  <!--
+    这个自定义的功能这个项目没有涉及，但是还是想试试所以加上了，以后要是出了变态需求想要那就用上，样式稍微弄了下，功能都有的
+  <h3>
+    Edit events
+    <button
+      class="btn btn-primary pull-right"
+      (click)="addEvent()">
+      Add new
+    </button>
+    <div class="clearfix"></div>
+  </h3>
+
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Primary color</th>
+      <th>Secondary color</th>
+      <th>Starts at</th>
+      <th>Ends at</th>
+      <th>Remove</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let event of events; let index = index">
+      <td>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="event.title"
+          (keyup)="refresh.next()">
+      </td>
+      <td>
+        <input
+          type="color"
+          [(ngModel)]="event.color.primary"
+          (change)="refresh.next()">
+      </td>
+      <td>
+        <input
+          type="color"
+          [(ngModel)]="event.color.secondary"
+          (change)="refresh.next()">
+      </td>
+      <td>
+        <mwl-demo-utils-date-time-picker
+          [(ngModel)]="event.start"
+          (ngModelChange)="refresh.next()"
+          placeholder="Not set">
+        </mwl-demo-utils-date-time-picker>
+      </td>
+      <td>
+        <mwl-demo-utils-date-time-picker
+          [(ngModel)]="event.end"
+          (ngModelChange)="refresh.next()"
+          placeholder="Not set">
+        </mwl-demo-utils-date-time-picker>
+      </td>
+      <td>
+        <button
+          class="btn btn-danger"
+          (click)="events.splice(index, 1); refresh.next()">
+          Delete
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>-->
+  <button style="margin-top:1rem;" ion-button block (click)="back()">返回</button>
+
+  <!--<ion-list class="infi-list">
+    <ion-list-header>
+      <ion-icon name='ios-contact-outline' color="primary"></ion-icon> &nbsp;个体化方案
+      <button ion-button round item-end (click)="back()">返回</button>
+    </ion-list-header>
+    <ion-item>
+      <ion-icon color="primary" name='planet' item-start></ion-icon>
+      <h2 class="no-margin-top">某种吸入剂</h2>
+      <p>用量：50/日</p>
+      <p>频次：每日两次</p>
+      <button disabled ion-button round item-end (click)="mark()">打卡</button>
+    </ion-item>
+    <ion-item>
+      <ion-icon color="primary" name='planet' item-start></ion-icon>
+      <h2 class="no-margin-top">呼吸操锻炼</h2>
+      <p>频次：每日一次</p>
+      <button disabled ion-button round item-end  (click)="goTimeClock()">评估</button>
+    </ion-item>
+  </ion-list>-->
+
+</ion-content>
+
+

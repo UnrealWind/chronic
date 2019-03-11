@@ -1,0 +1,27 @@
+
+<ion-content >
+  <ion-list class="infi-list">
+    <ion-list-header>
+      <ion-icon name='planet' color="primary"></ion-icon> &nbsp;健康记录详情
+    </ion-list-header>
+    <ion-item>
+      <ion-label fixed>舒张压</ion-label>
+      <ion-input type="text" value=""></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>收缩压</ion-label>
+      <ion-input type="text" value=""></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>心率</ion-label>
+      <ion-input type="text" value=""></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>时间</ion-label>
+      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" ></ion-datetime>
+    </ion-item>
+  </ion-list>
+
+  <button ion-button block (click)="save()">保存</button>
+
+</ion-content>

@@ -1,0 +1,75 @@
+<ion-content >
+  <!--<h2>呼吸科 &nbsp;&nbsp;&nbsp; 朝阳医院</h2>-->
+  <ion-list>
+    <ion-list-header>
+      <ion-icon name='ios-paper-outline' color="primary"></ion-icon>&nbsp;基本信息
+      <button ion-button round item-end (click)="back()">返回</button>
+    </ion-list-header>
+    <ion-item >
+      <h2 class="no-margin-top">出院诊断  慢阻肺居家护理方案</h2>
+      <p>入院时间：2018-01-01</p>
+      <p>出院时间：2018-01-01</p>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-icon name='ios-paper-outline' color="primary"></ion-icon>&nbsp;检查信息
+    </ion-list-header>
+    <ion-item (click)="goDetail('te')">
+      <h2 class="no-margin-top">心脏超声</h2>
+      <p>2018.1.1</p>
+      <button ion-button round color="secondary" small item-end>正常</button>
+      <ion-icon style="position: relative;top:0.2rem;" color="primary" name="ios-arrow-forward-outline" item-end></ion-icon>
+    </ion-item>
+    <ion-item (click)="goDetail('te')">
+      <h2 class="no-margin-top">肺部CT平扫</h2>
+      <p>2018.1.1</p>
+      <button ion-button round color="danger" small item-end>四项异常</button>
+      <ion-icon style="position: relative;top:0.2rem;" color="primary" name="ios-arrow-forward-outline" item-end></ion-icon>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-icon name='ios-paper-outline' color="primary"></ion-icon>&nbsp;检验信息
+    </ion-list-header>
+    <ion-item (click)="goDetail('ex')">
+      <h2 class="no-margin-top">血常规</h2>
+      <p>2018.1.1</p>
+      <button ion-button round color="secondary" small item-end>正常</button>
+      <ion-icon style="position: relative;top:0.2rem;" color="primary" name="ios-arrow-forward-outline" item-end></ion-icon>
+    </ion-item>
+    <ion-item (click)="goDetail('ex')">
+      <h2 class="no-margin-top">血脂</h2>
+      <p>2018.1.1</p>
+      <button ion-button round color="danger" small item-end>四项异常</button>
+      <ion-icon style="position: relative;top:0.2rem;" color="primary" name="ios-arrow-forward-outline" item-end></ion-icon>
+    </ion-item>
+  </ion-list>
+
+
+  <ion-list>
+    <ion-list-header>
+      <ion-icon name='ios-paper-outline' color="primary"></ion-icon>&nbsp;手术信息
+    </ion-list-header>
+    <ion-item >
+      <h2 class="no-margin-top">肺部手术</h2>
+      <ion-note item-end>
+        2018.1.1
+      </ion-note>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      <ion-icon name='ios-paper-outline' color="primary"></ion-icon>&nbsp;处置信息
+    </ion-list-header>
+    <ion-item >
+      <h2 class="no-margin-top">吸氧</h2>
+      <ion-note item-end>
+        2018.1.1
+      </ion-note>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

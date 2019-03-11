@@ -1,0 +1,17 @@
+page-healthy-record-list {
+  ion-list {
+    margin-bottom: 0 !important;
+  }
+  ion-segment {
+    background-color: #fff;
+    margin-bottom: 1rem;
+  }
+  .customer-plan-wrapper {
+    margin: 0!important;
+    margin-top: 1.5rem!important;
+    width: 100%!important;
+  }
+  ion-app.ios ion-list {
+
+  }
+}

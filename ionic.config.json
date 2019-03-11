@@ -1,0 +1,7 @@
+{
+  "name": "record-collect",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

@@ -1,0 +1,25 @@
+page-health-history {
+  .history-list {
+    .list-item {
+      padding-left: 0 !important;
+      .wrap-line {
+        overflow: inherit;
+        line-height: normal;
+        color: #000;
+        text-overflow: inherit;
+        margin: 0;
+        white-space: normal;
+      }
+
+      .item-span {
+        display: inline-block;
+        margin-right: 2rem;
+        margin-bottom: .2rem;
+      }
+
+      .input-wrapper {
+        padding-left: 1rem;
+      }
+    }
+  }
+}
