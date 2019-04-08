@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy,ViewChild,TemplateRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import {
   startOfDay,
   endOfDay,
@@ -15,7 +15,8 @@ import { CalendarEvent,CalendarEventAction,CalendarEventTimesChangedEvent } from
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { colors } from '../../components/demo-utils/colors';
 
-// service
+// sessionStorage
+import { SessionStorageProvider } from "../../providers/session-storage/session-storage";
 import { ApiServiceProvider } from "../../providers/api-service/api-service";
 import { UtilsProvider } from "../../providers/utils/utils"
 
@@ -71,7 +72,9 @@ export class PlanDetailPage{
     public navParams: NavParams,
     private modal: NgbModal,
     public api: ApiServiceProvider,
-    private utils: UtilsProvider) {
+    private utils: UtilsProvider,
+    private ss: SessionStorageProvider,
+    public viewCtrl: ViewController) {
 
   }
 
@@ -86,6 +89,12 @@ export class PlanDetailPage{
   ionViewDidLeave() {
     // 清除缓存数据
     this.events = []
+
+    this.showTabBar()
+  }
+
+  ionViewWillEnter() {
+    this.hideTabBar()
   }
 
 
@@ -141,7 +150,7 @@ export class PlanDetailPage{
    * @qureyParam end<yyyy-MM-dd>: 结束时间
    */
   getPlan(begin: string, end: string) {
-    var patientId = sessionStorage.getItem('patientId')
+    var patientId = this.ss.get('patientId')
 
     this.api.healthIndex.getPlan(patientId, begin, end)
         .subscribe((msg: common) => {
@@ -229,6 +238,22 @@ export class PlanDetailPage{
 
   back = function(){
     this.navCtrl.pop();
+  }
+
+  /**
+   * 隐藏 tab 栏
+   */
+  hideTabBar(): void {
+    var _tabNativeEle = this.viewCtrl._nav.parent._tabbar.nativeElement
+    _tabNativeEle['hidden'] = true
+  }
+
+  /**
+   * 显示 tab 栏
+   */
+  showTabBar(): void {
+    var _tabNativeEle = this.viewCtrl._nav.parent._tabbar.nativeElement
+    _tabNativeEle['hidden'] = false
   }
 
 }

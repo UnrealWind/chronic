@@ -1,0 +1,90 @@
+<!-- 门诊药品 -->
+<ion-list>
+  <ion-list-header>
+    <ion-icon name='ios-paper-outline' color="primary"></ion-icon>&nbsp;
+    <!-- 门诊 -->
+    <span *ngIf="type == 2">药物信息</span>
+    <!-- 住院 -->
+    <span *ngIf="type == 3">医嘱信息</span>
+  </ion-list-header>
+
+  <div *ngIf="renderData != 'err' && renderData?.length > 0"
+      class="list-wrapper"
+      (click)="collapse($event)">
+    <!-- 门诊药物 -->
+    <div *ngIf="type == 2">
+      <ion-item *ngFor="let drug of renderData">
+       <dl class="list-item-wrapper">
+         <dt class="left-label first-title">{{drug.drug_name}}</dt>
+         <dd class="right-label time">{{drug.presc_date | date:"yyyy-MM-dd"}}</dd>
+       </dl>
+
+       <!-- 药品子信息 -->
+       <div class="sub-line">
+         <span class="sub-item"><span class="sub-title">规格：</span><span class="value-container">{{drug.drug_spec}}</span></span>
+         <span class="sub-item"><span class="sub-title">单位：</span><span class="value-container">{{drug.package_units}}</span></span>
+         <span class="sub-item"><span class="sub-title">数量：</span><span class="value-container">{{drug.quantity}}</span></span>
+       </div>
+      </ion-item>
+    </div>
+
+    <!-- 住院医嘱 -->
+    <div *ngIf="type == 3">
+      <ion-item *ngFor="let drug of renderData">
+        <dl class="list-item-wrapper">
+          <dt class="left-label first-title">{{drug.repeat_indicator}}</dt>
+          <dd class="right-label time">{{drug.enter_date_time}}</dd>
+        </dl>
+
+        <!-- 药品子信息 -->
+        <div class="sub-line">
+          <ion-grid>
+            <!-- 第一行 -->
+            <ion-row>
+              <ion-col>
+                <span class="sub-item"><span class="sub-title">医嘱内容：</span><span class="value-container content-wrap">{{drug.order_text}}</span></span>
+              </ion-col>
+            </ion-row>
+
+            <!-- 第二行 -->
+            <ion-row>
+              <ion-col>
+                <span class="sub-item"><span class="sub-title">计量：</span><span class="value-container content-wrap">{{drug.dosage}}</span></span>
+              </ion-col>
+              <ion-col>
+                <span class="sub-item"><span class="sub-title">单位：</span><span class="value-container content-wrap">{{drug.dosage_units}}</span></span>
+              </ion-col>
+              <ion-col>
+                <span class="sub-item"><span class="sub-title">频次：</span><span class="value-container content-wrap">{{drug.frequncy}}</span></span>
+              </ion-col>
+            </ion-row>
+
+            <!-- 第三行 -->
+            <ion-row>
+              <ion-col>
+                <span class="sub-item"><span class="sub-title">开始时间：</span><span class="value-container content-wrap">{{drug.start_date_time}}</span></span>
+              </ion-col>
+            </ion-row>
+
+            <!-- 第四行 -->
+            <ion-row>
+              <ion-col>
+                <span class="sub-item"><span class="sub-title">结束时间：</span><span class="value-container content-wrap">{{drug.stop_date_time}}</span></span>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </ion-item>
+    </div>
+
+
+   <!-- 更多 -->
+   <a  *ngIf="renderData?.length > 3"
+       href="javascript:;" data-collapse="close"  class="more">更多↓</a>
+  </div>
+
+  <!-- 无数据 -->
+  <ion-item *ngIf="renderData != 'err' && renderData?.length == 0">
+    <p class="value-container content-wrap"></p>
+  </ion-item>
+</ion-list>

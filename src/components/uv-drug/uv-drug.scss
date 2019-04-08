@@ -1,0 +1,81 @@
+uv-drug {
+  // 空值缺省
+  .value-container:empty::before {
+    content: '-';
+    color: #999;
+  }
+
+  .content-wrap {
+    white-space: normal;
+  }
+
+  .more {
+    position: absolute;
+    width: 100%;
+    padding-top: 20px;
+    bottom: 0; left: 0;
+    background: linear-gradient(to bottom, hsla(0,0%,100%,0), hsla(0,0%,100%,.9) 50%, hsla(0,0%,100%,1));
+    text-align: center;
+  }
+
+  .list-wrapper.active {
+    max-height: none;
+    padding-bottom: 2rem;
+  }
+  .active > .more {
+    margin-top: 2rem;
+  }
+
+  .list-wrapper {
+    position: relative;
+    max-height: 250px;
+    overflow: hidden;
+    .list-item-wrapper {
+      .first-title,
+      .sub-title {
+        font-weight: normal;
+      }
+
+      .first-title,
+      .time {
+        margin-bottom: 0;
+      }
+
+      .time {
+        color: #c1c1c1;
+      }
+
+      .sub-title,
+      .sub-content {
+        padding: .5rem 0;
+        font-size: .9em;
+      }
+
+
+      .left-label {
+        width: 5em;
+        float: left;
+        clear: left;
+      }
+
+      .right-label {
+        margin-left: 0;
+        white-space: normal;
+        word-break: break-all;
+        text-align: right;
+        overflow: hidden;
+      }
+    }
+
+    .sub-line {
+      display: flex;
+      flex-wrap: wrap;
+      .sub-item {
+        flex: 1 0 auto;
+        .sub-title {
+          color: #c1c1c1;
+        }
+      }
+    }
+  }
+}

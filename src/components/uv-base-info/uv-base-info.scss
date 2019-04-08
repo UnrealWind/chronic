@@ -1,0 +1,16 @@
+uv-base-info {
+  // 空值缺省
+  .value-container:empty::before {
+    content: '-';
+    color: #999;
+  }
+  .basic-info-grid {
+    padding-top: .5rem!important;
+    padding-bottom: 0!important;
+    .row {
+      .col {
+        padding-right: 1rem!important;
+      }
+    }
+  }
+}

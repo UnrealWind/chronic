@@ -1,35 +1,66 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>患者管理</ion-title>
+  </ion-navbar>
+</ion-header>
 
-<ion-content >
-  <ion-list radio-group [(ngModel)]="params.cardType">
-    <ion-list-header>
-      <ion-icon name='planet' color="primary"></ion-icon> &nbsp;用户信息绑定
-    </ion-list-header>
-    <ion-item>
-      <ion-label>绑卡</ion-label>
-      <ion-select [(ngModel)]="params.cardType" interface="action-sheet" cancelText="返回">
-        <ion-option value="1">就诊卡</ion-option>
-        <ion-option value="2">社保卡</ion-option>
-        <ion-option value="3">京医卡</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>姓名：</ion-label>
-      <ion-input [(ngModel)]="params.name" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>身份证号：</ion-label>
-      <ion-input [(ngModel)]="params.idcard" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>就诊卡/社保/医保卡号：</ion-label>
-      <ion-input [(ngModel)]="params.cardNo" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <img src="assets/img/card{{params.cardType}}.jpg">
-    </ion-item>
+<ion-content>
+  <div class="pati-list-wrapper">
+    <p class="opt-tip" *ngIf="usrs?.length > 0">* 左滑操作患者</p>
+    <ion-list class="pati-list" *ngIf="usrs?.length > 0">
+      <div *ngFor="let usr of usrs">
+        <div *ngIf="usr.type == '1'">
+          <ion-item-sliding #defaultItem>
+            <ion-item class="fix-min-height" (click)="setAsDefault(usr)">
+              <h2>{{usr.name}}</h2>
+              <ion-icon name="md-checkmark" class="default-usr" item-end></ion-icon>
+            </ion-item>
+            <!-- 右划 -->
+            <ion-item-options side="right">
+              <!-- 查看 -->
+              <button ion-button color="primary" (click)="viewUsr(usr, defaultItem)">
+                <ion-icon name="eye"></ion-icon>
+                查看详情
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </div>
 
+        <div *ngIf="usr.type == '0'">
+          <ion-item-sliding #item>
+            <ion-item class="fix-min-height" (click)="setAsDefault(usr)">
+              <h2>{{usr.name}}</h2>
+            </ion-item>
+            <!-- 右划 -->
+            <ion-item-options side="right">
+              <!-- 设为默认 -->
+              <button ion-button color="secondary" (click)="setAsDefault(usr, item)">
+                <ion-icon name="menu"></ion-icon>
+                设为默认
+              </button>
+              <!-- 查看 -->
+              <button ion-button color="primary" (click)="viewUsr(usr, item)">
+                <ion-icon name="eye"></ion-icon>
+                查看详情
+              </button>
+
+              <!-- 删除 -->
+              <button ion-button color="danger" (click)="deleUsr(usr, item)">
+                <ion-icon name="trash"></ion-icon>
+                删除
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </div>
+
+      </div>
+    </ion-list>
+  </div>
+
+  <!-- 添加患者 -->
+  <ion-list class="pati-list add-pati-wrapper" *ngIf="usrs">
+    <ion-item class="add-pati-btn text-center" (click)="addUsr()">
+      <ion-icon name="md-add"></ion-icon> 添加患者
+    </ion-item>
   </ion-list>
-
-  <button ion-button block (click)="bind()">绑定</button>
-
 </ion-content>

@@ -96,4 +96,17 @@ export class UtilsProvider {
     }
   }
 
+  /**
+   * 安全获取对象上的属性
+   * fn 存储需要读取的属性
+   * defaultVal 存储获取失败后赋予的默认值
+   */
+  getSafe = function(fn, defaultVal) {
+    try {
+        return fn();
+    } catch (e) {
+        return defaultVal;
+    }
+  }
+
 }

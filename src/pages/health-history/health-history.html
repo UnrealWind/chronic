@@ -1,33 +1,26 @@
-<!--
-  Generated template for the HealthHistoryPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar>
     <ion-title>{{ navParams.data.title }}的历史记录</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content >
-  <ion-list *ngIf="historyList" class="history-list">
+  <ion-list *ngIf="historyList">
     <div [ngSwitch]="currHisType">
       <!-- 血氧 -->
       <div *ngSwitchCase="9">
-        <ion-item class="list-item"
-                  *ngFor="let item of historyList">
-          <span class="item-span">{{item.time}}</span>
-          <span class="item-span">{{item.spoValue}}%</span>
+        <ion-item *ngFor="let item of historyList">
+          <h2>{{item.spoValue}} %</h2>
+          <h3>{{item.time}}</h3>
 
-          <span [ngSwitch]="item.level">
-            <span *ngSwitchCase="0" class="item-span">低氧血症</span>
-            <span *ngSwitchCase="1" class="item-span">失饱和状态</span>
-            <span *ngSwitchCase="2" class="item-span">正常</span>
-          </span>
+          <ion-note item-end>
+            <span [ngSwitch]="item.level">
+              <span *ngSwitchCase="0" class="value-container">低氧血症</span>
+              <span *ngSwitchCase="1" class="value-container">失饱和状态</span>
+              <span *ngSwitchCase="2" class="value-container">正常</span>
+            </span>
+          </ion-note>
         </ion-item>
       </div>
 
@@ -35,12 +28,14 @@
       <div *ngSwitchCase="7">
         <ion-item class="list-item"
                   *ngFor="let item of historyList">
-          <span class="item-span">{{item.time}}</span>
+          <h2>{{item.time}}</h2>
 
-          <span [ngSwitch]="item.level">
-            <span *ngSwitchCase="1" class="item-span">正常</span>
-            <span *ngSwitchCase="2" class="item-span">异常</span>
-          </span>
+          <ion-note item-end>
+            <span [ngSwitch]="item.level">
+              <span *ngSwitchCase="1" class="value-container">正常</span>
+              <span *ngSwitchCase="2" class="value-container">异常</span>
+            </span>
+          </ion-note>
         </ion-item>
       </div>
 
@@ -48,15 +43,13 @@
       <div *ngSwitchCase="14">
         <ion-item class="list-item"
                   *ngFor="let item of historyList">
-          <span class="item-span">{{item.time}}</span>
-          <span class="item-span">{{item.bodyTemperature}}</span>
+          <h2 class="value-container">{{item.bodyTemperature}}</h2>
+          <h3 class="value-container">{{item.time}}</h3>
 
-          <span [ngSwitch]="item.level">
-            <span *ngSwitchCase="1" class="item-span">正常</span>
-            <span *ngSwitchCase="2" class="item-span">低热</span>
-            <span *ngSwitchCase="3" class="item-span">中度发热</span>
-            <span *ngSwitchCase="4" class="item-span">高热</span>
-          </span>
+          <ion-note *ngIf="item.level == 1" item-end class="value-container">正常</ion-note>
+          <ion-note *ngIf="item.level == 2" item-end class="value-container">低热</ion-note>
+          <ion-note *ngIf="item.level == 3" item-end class="value-container">中度发热</ion-note>
+          <ion-note *ngIf="item.level == 4" item-end class="value-container">高热</ion-note>
         </ion-item>
       </div>
 
@@ -64,29 +57,28 @@
       <div *ngSwitchCase="6">
         <ion-item class="list-item"
                   *ngFor="let item of historyList">
-          <span class="item-span">{{item.time}}</span>
-          <span class="item-span">{{item.bmi}}</span>
+          <h2><span>BMI: </span><span class="value-container">{{item.bmi}}</span></h2>
         </ion-item>
       </div>
 
       <!-- 血压 -->
       <div *ngSwitchCase="1">
-        <ion-item class="list-item"
-                  *ngFor="let item of historyList">
-          <p class="wrap-line">
-            <span class="item-span">{{item.time}}</span>
-            <span class="item-span">收缩压(高压):{{item.highValue}}</span>
-            <span class="item-span">舒张压(低压):{{item.lowValue}}</span>
-
+        <ion-item *ngFor="let item of historyList">
+          <h2>{{item.time}}</h2>
+          <h3>
+            <span>收缩压(高压)：</span><span class="value-container">{{item.highValue}}</span>
+            <span>舒张压(低压):</span><span class="value-container">{{item.lowValue }}</span>
+          </h3>
+          <ion-note item-end>
             <span [ngSwitch]="item.level">
-              <span *ngSwitchCase="-1" class="item-span">偏低</span>
-              <span *ngSwitchCase="0" class="item-span">正常</span>
-              <span *ngSwitchCase="1" class="item-span">正常高值</span>
-              <span *ngSwitchCase="2" class="item-span">1级高血压</span>
-              <span *ngSwitchCase="3" class="item-span">2级高血压</span>
-              <span *ngSwitchCase="4" class="item-span">3级高血压</span>
+              <span *ngSwitchCase="-1" class="item-span value-container">偏低</span>
+              <span *ngSwitchCase="0" class="item-span value-container">正常</span>
+              <span *ngSwitchCase="1" class="item-span value-container">正常高值</span>
+              <span *ngSwitchCase="2" class="item-span value-container">1级高血压</span>
+              <span *ngSwitchCase="3" class="item-span value-container">2级高血压</span>
+              <span *ngSwitchCase="4" class="item-span value-container">3级高血压</span>
             </span>
-          </p>
+          </ion-note>
         </ion-item>
       </div>
 
@@ -94,10 +86,38 @@
       <div *ngSwitchCase="10">
         <ion-item class="list-item"
                   *ngFor="let item of historyList">
-          <span class="item-span">{{item.time}}</span>
-          <span class="item-span">{{item.heartRate}}</span>
+          <h2>{{item.time}}</h2>
+          <ion-note item-end><span class="value-container">{{item.heartRate}}</span><span>次/分</span></ion-note>
         </ion-item>
       </div>
+
+      <!-- fev1 -->
+      <div *ngSwitchCase="'fev1'">
+        <ion-item class="list-item fev-serious"
+                  *ngFor="let item of historyList">
+          <ion-label class="value-container">{{item.key}}</ion-label>
+          <ion-note item-end class="value-container">{{item.value}}</ion-note>
+        </ion-item>
+      </div>
+
+      <!-- pef -->
+      <div *ngSwitchCase="'pef'">
+        <ion-item class="list-item fev-serious"
+                  *ngFor="let item of historyList">
+          <ion-label class="value-container">{{item.key}}</ion-label>
+          <ion-note item-end class="value-container">{{item.value}}</ion-note>
+        </ion-item>
+      </div>
+
+      <!-- fvc -->
+      <div *ngSwitchCase="'fvc'">
+        <ion-item class="list-item fev-serious"
+                  *ngFor="let item of historyList">
+          <ion-label class="value-container">{{item.key}}</ion-label>
+          <ion-note item-end class="value-container">{{item.value}}</ion-note>
+        </ion-item>
+      </div>
+
     </div>
   </ion-list>
 

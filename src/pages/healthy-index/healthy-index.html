@@ -1,4 +1,14 @@
 <ion-content >
+  <!-- 下拉刷新 -->
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullMax="100"
+      pullingText="下拉刷新">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <check-pati (checkPassed)="init($event)" *ngIf="rerend"></check-pati>
+
   <ion-list class="health-list-wrapper">
     <ion-list-header>
       <ion-icon name='ios-paper-outline' color="primary"></ion-icon> &nbsp;健康数据
@@ -9,7 +19,7 @@
       <h2 class="no-margin-top">暂无信息，请先进行设备绑定！</h2>
     </ion-item>
 
-    <ion-grid *ngIf="info" class="healthData-wrapper">
+    <ion-grid class="healthData-wrapper">
       <ion-row *ngFor="let rowData of healthDatas"
                class="healthData-row">
         <ion-col col-4
@@ -43,12 +53,6 @@
                 </div>
               </li>
             </ul>
-
-            <!-- detail -->
-            <!--<p class="item-detail"
-                *ngIf="healthData.detail">
-              <span [style.color]="healthData.detail.color">{{healthData.detail.txt}}</span>
-            </p>-->
           </div>
         </ion-col>
       </ion-row>
@@ -56,15 +60,15 @@
   </ion-list>
 
   <ion-list class="infi-list">
-    <ion-list-header>
+    <ion-list-header class="plan-list-header">
       <ion-icon name='ios-contact-outline' color="primary"></ion-icon> &nbsp;个体化方案
     </ion-list-header>
 
     <ion-item *ngIf="!fixedHealthPlan">
-      <h2 class="no-margin-top text-center">暂无方案</h2>
+      <h2 class="no-margin-top text-center">请联系医生分配方案</h2>
     </ion-item>
 
-    <div *ngIf="fixedHealthPlan">
+    <ion-list *ngIf="fixedHealthPlan" class="plan-list">
       <!-- 未完成 -->
       <ion-item *ngFor="let single of fixedHealthPlan.waiting; let i = index">
         <ion-icon color="primary" name='planet' item-start></ion-icon>
@@ -85,6 +89,6 @@
 
         <button *ngIf="single.statusCode == 'finish'" ion-button round item-end color="secondary" >已完成</button>
       </ion-item>
-    </div>
+    </ion-list>
   </ion-list>
 </ion-content>

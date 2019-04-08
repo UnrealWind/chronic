@@ -1,0 +1,36 @@
+uv-history {
+  // 空值缺省
+  .value-container:empty::before {
+    content: '-';
+    color: #999;
+  }
+
+  .sup-title {
+    margin-bottom: .8rem;
+  }
+
+  // 子内容
+  .sub-item {
+    margin-bottom: .5rem;
+    .sub-item-title,
+    .sub-item-value {
+      margin-bottom: 0;
+      font-weight: normal;
+      font-size: .9em;
+    }
+
+    .sub-item-title {
+      width: 5em;
+      float: left;
+      clear: left;
+    }
+    .sub-item-value {
+      margin-left: 0;
+      white-space: normal;
+      word-break: break-all;
+      text-align: right;
+      overflow: hidden;
+    }
+  }
+
+}

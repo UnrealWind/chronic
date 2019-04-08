@@ -1,0 +1,52 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title *ngIf="actType == 'add'">绑定新患者</ion-title>
+    <ion-title *ngIf="actType == 'view'">患者详情</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list class="form-wrapper" *ngIf="currEditUsr">
+    <!-- 卡类型 -->
+    <ion-item>
+      <ion-label color="primary" stacked>持卡类型</ion-label>
+      <ion-select [disabled]="actType == 'view'" [(ngModel)]="currEditUsr.cardType" interface="action-sheet" cancelText="返回">
+        <ion-option value="1">就诊卡</ion-option>
+        <ion-option value="2">社保卡</ion-option>
+        <ion-option value="3">京医卡</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <form [formGroup]="bindUsrForm">
+      <!-- 姓名 -->
+      <ion-item>
+        <ion-label color="primary" stacked>姓名</ion-label>
+        <ion-input placeholder="请输入姓名" formControlName="username" [readonly]="actType == 'view'"  [(ngModel)]="currEditUsr.name"></ion-input>
+      </ion-item>
+
+      <!-- 身份证号 -->
+      <ion-item>
+        <ion-label color="primary" stacked >身份证号</ion-label>
+        <ion-input placeholder="请输入身份证号" formControlName="idCardNo" [readonly]="actType == 'view'"  [(ngModel)]="currEditUsr.idcard"></ion-input>
+      </ion-item>
+
+      <!-- 就诊卡 / 社保 / 医保卡号 -->
+      <ion-item>
+        <ion-label color="primary" stacked>卡号</ion-label>
+        <ion-input placeholder="请输入卡号" formControlName="pId" [readonly]="actType == 'view'" [(ngModel)]="currEditUsr.cardNo"></ion-input>
+      </ion-item>
+    </form>
+
+    <!-- 卡片示例图 -->
+    <ion-item>
+      <img src="assets/img/card{{currEditUsr.cardType}}.jpg">
+    </ion-item>
+  </ion-list>
+
+  <button *ngIf="actType == 'add'" ion-button block (click)="bind()"
+          [disabled]="!bindUsrForm.controls.username.valid || !bindUsrForm.controls.idCardNo.valid || !bindUsrForm.controls.pId.valid">绑定</button>
+  <button *ngIf="actType == 'edit'" ion-button block (click)="bind()">保存</button>
+</ion-content>

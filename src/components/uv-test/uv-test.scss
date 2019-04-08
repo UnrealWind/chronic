@@ -1,0 +1,30 @@
+uv-test {
+  // 空值缺省
+  .value-container:empty::before {
+    content: '-';
+    color: #999;
+  }
+
+  .more {
+    position: absolute;
+    width: 100%;
+    padding-top: 20px;
+    bottom: 0; left: 0;
+    background: linear-gradient(to bottom, hsla(0,0%,100%,0), hsla(0,0%,100%,.9) 50%, hsla(0,0%,100%,1));
+    text-align: center;
+  }
+
+  .list-wrapper.active {
+    max-height: none;
+    padding-bottom: 2rem;
+  }
+  .active > .more {
+    margin-top: 2rem;
+  }
+
+  .list-wrapper {
+    position: relative;
+    max-height: 250px;
+    overflow: hidden;
+  }
+}

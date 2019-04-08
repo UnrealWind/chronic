@@ -1,0 +1,183 @@
+<ion-list>
+  <ion-list-header>
+    <ion-icon name='ios-paper-outline' color="primary"></ion-icon>&nbsp;基本信息
+  </ion-list-header>
+
+  <!-- 门诊 2 -->
+  <div *ngIf="type == '2'">
+    <div *ngIf="renderData != 'err' && renderData?.length > 0">
+      <ion-grid padding class="basic-info-grid">
+        <!-- 第一行 -->
+        <ion-row>
+          <ion-col>
+            <span>姓名：</span><span class="value-container">{{renderData[0].name}}</span>
+          </ion-col>
+          <ion-col>
+            <span>性别：</span><span class="value-container">{{renderData[0].sex_name}}</span>
+          </ion-col>
+          <ion-col>
+            <span>年龄：</span><span class="value-container">{{renderData[0].age}}</span>
+          </ion-col>
+        </ion-row>
+        <!-- 第二行 -->
+        <ion-row>
+          <ion-col>
+            <span>婚姻：</span><span class="value-container">{{renderData[0].marr_status_name}}</span>
+          </ion-col>
+
+          <ion-col>
+            <span>出生年月：</span><span class="value-container">{{renderData[0].date_of_birth}}</span>
+          </ion-col>
+        </ion-row>
+        <!-- 第三行 -->
+        <ion-row>
+          <ion-col>
+            <span>联系方式：</span><span class="value-container">{{renderData[0].phone_number_home}}</span>
+          </ion-col>
+        </ion-row>
+        <!-- 第四行 -->
+        <ion-row>
+          <ion-col>
+            <span>通信地址：</span><span class="value-container">{{renderData[0].mailing_address}}</span>
+          </ion-col>
+        </ion-row>
+        <!-- 第五行 -->
+        <ion-row>
+          <ion-col>
+            <span>联系人：</span><span class="value-container">{{renderData[0].next_of_kin}}</span>
+          </ion-col>
+          <ion-col>
+            <span>与患者关系：</span><span class="value-container">{{renderData[0].relationship}}</span>
+          </ion-col>
+        </ion-row>
+        <!-- 第六行 -->
+        <ion-row>
+          <ion-col>
+            <span>联系人方式：</span><span class="value-container">{{renderData[0].next_of_kin_phone}}</span>
+          </ion-col>
+          <ion-col>
+            <span>号类：<span class="value-container">{{renderData[0].clinic_type}}</span></span>
+          </ion-col>
+          <ion-col>
+            <span>号别：</span><span class="value-container">{{renderData[0].clinic_label}}</span>
+          </ion-col>
+        </ion-row>
+        <!-- 第七行 -->
+        <ion-row>
+          <ion-col>
+            <span>就诊科室：</span><span class="value-container">{{renderData[0].visit_dept}}</span>
+          </ion-col>
+          <ion-col>
+            <span>就诊日期：<span class="value-container">{{renderData[0].visit_date | date:"yyyy-MM-dd"}}</span></span>
+          </ion-col>
+        </ion-row>
+        <!-- 第八行 -->
+        <ion-row>
+          <ion-col>
+            <span>创建时间：<span class="value-container">{{renderData[0].create_date | date:"yyyy-MM-dd hh:mm:ss"}}</span></span>
+          </ion-col>
+        </ion-row>
+        <!-- 第九行 -->
+        <ion-row>
+          <ion-col>
+            <span>最近访问时间：<span class="value-container">{{renderData[0].last_visit_date | date:"yyyy-MM-dd hh:mm:ss"}}</span></span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+
+  <!-- 住院 3 -->
+  <div *ngIf="type == '3'">
+    <div *ngIf="renderData != 'err' && renderData?.length > 0">
+      <ion-grid padding class="basic-info-grid">
+        <!-- 第一行 -->
+        <ion-row>
+          <ion-col>
+            <span>姓名：</span><span class="value-container">{{renderData[0].name}}</span>
+          </ion-col>
+          <ion-col>
+            <span>性别：</span><span class="value-container">{{renderData[0].sex_name}}</span>
+          </ion-col>
+          <ion-col>
+            <span>年龄：</span><span class="value-container">{{renderData[0].age}}</span>
+          </ion-col>
+        </ion-row>
+        <!-- 第二行 -->
+        <ion-row>
+          <ion-col>
+            <span>民族：</span><span class="value-container">{{renderData[0].national}}</span>
+          </ion-col>
+          <ion-col>
+            <span>婚姻：</span><span class="value-container">{{renderData[0].marr_status_name}}</span>
+          </ion-col>
+          <ion-col>
+            <span>血型：</span><span class="value-container">{{renderData[0].blood}}</span>
+          </ion-col>
+
+        </ion-row>
+        <!-- 第三行 -->
+        <ion-row>
+          <ion-col>
+            <span>出生年月：</span><span class="value-container">{{renderData[0].date_of_birth}}</span>
+          </ion-col>
+          <ion-col>
+            <span>联系方式：</span><span class="value-container">{{renderData[0].phone_number_home}}</span>
+          </ion-col>
+        </ion-row>
+        <!-- 第四行 -->
+        <ion-row>
+          <ion-col>
+            <span>通信地址：</span><span class="value-container">{{renderData[0].mailing_address}}</span>
+          </ion-col>
+        </ion-row>
+        <!-- 第五行 -->
+        <ion-row>
+          <ion-col>
+            <span>联系人：</span><span class="value-container">{{renderData[0].next_of_kin}}</span>
+          </ion-col>
+          <ion-col>
+            <span>与患者关系：</span><span class="value-container">{{renderData[0].relationship}}</span>
+          </ion-col>
+        </ion-row>
+        <!-- 第六行 -->
+        <ion-row>
+          <ion-col>
+            <span>联系人方式：</span><span class="value-container">{{renderData[0].next_of_kin_phone}}</span>
+          </ion-col>
+          <ion-col>
+            <span>住院天数：</span><span class="value-container">{{renderData[0].in_hosp_days}}</span>
+          </ion-col>
+        </ion-row>
+        <!-- 第七行 -->
+        <ion-row>
+          <ion-col>
+            <span>入院/出院 时间：</span><span class="value-container">{{renderData[0].admission_date_time}}</span>
+          </ion-col>
+          <ion-col>
+            <span>入院/出院 科室：</span><span class="value-container">{{renderData[0].dept_admission_to_id}}</span>
+          </ion-col>
+        </ion-row>
+        <!-- 第八行 -->
+        <ion-row>
+          <ion-col>
+            <span>创建时间：</span><span class="value-container">{{renderData[0].create_date}}</span>
+          </ion-col>
+        </ion-row>
+        <!-- 第九行 -->
+        <ion-row>
+          <ion-col>
+            <span>最近访问时间：</span><span class="value-container">{{renderData[0].last_visit_date}}</span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+
+  <!-- 无数据 -->
+  <ion-item *ngIf="renderData != 'err' && renderData?.length == 0">
+    <p class="value-container"></p>
+  </ion-item>
+</ion-list>
+
+

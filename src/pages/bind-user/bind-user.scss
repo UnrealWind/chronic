@@ -1,9 +1,39 @@
 page-bind-user {
-  img{
-    width: 100%;
+  .fix-min-height {
+    min-height: 6rem!important;
   }
 
-  .button {
+  .pati-list-wrapper {
+    margin: 3rem 0;
+    .opt-tip {
+      padding-left: 1.6rem;
+      color: #8d8d8d;
+    }
+    
+    .pati-list {
+      .default-usr,
+      .view-pati-btn,
+      .dele-pati-btn {
+        width: 4.7rem;
+        margin: 0 !important;
+        padding: .8rem 1.1rem .8rem 1.5rem;
+      }
 
+      .default-usr {
+        color: #32db64;
+      }
+
+      .dele-pati-btn {
+        color: #d73a49;
+      }
+    }
+  }
+
+  .add-pati-wrapper {
+    .add-pati-btn {
+      border: none !important;
+      box-shadow: none !important;
+      color: #488aff;
+    }
   }
 }

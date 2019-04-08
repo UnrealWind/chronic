@@ -1,0 +1,77 @@
+uv-exam-info {
+  // 空值缺省
+  .value-container:empty::before {
+    content: '-';
+    color: #999;
+  }
+
+  .more {
+    position: absolute;
+    width: 100%;
+    padding-top: 20px;
+    bottom: 0; left: 0;
+    background: linear-gradient(to bottom, hsla(0,0%,100%,0), hsla(0,0%,100%,.9) 50%, hsla(0,0%,100%,1));
+    text-align: center;
+  }
+
+  .list-wrapper.active {
+    max-height: none;
+    padding-bottom: 2rem;
+  }
+  .active > .more {
+    margin-top: 2rem;
+  }
+
+  .list-wrapper {
+    position: relative;
+    max-height: 250px;
+    overflow: hidden;
+    .input-wrapper {
+      .label {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    }
+
+    .list-item-wrapper {
+      margin-bottom: .2rem;
+      .first-title,
+      .sub-title {
+        font-weight: normal;
+      }
+
+      .first-title,
+      .time {
+        margin-bottom: 0;
+      }
+
+      .time {
+        color: #c1c1c1;
+      }
+
+      .sub-title,
+      .sub-content {
+        padding: .5rem 0;
+        font-size: .9em;
+        margin-bottom: 0;
+      }
+
+      .sub-title {
+        float: left;
+      }
+
+      .left-label {
+        width: 5em;
+      }
+
+      .right-label {
+        margin-left: 0;
+        white-space: normal;
+        word-break: break-all;
+        text-align: right;
+        overflow: hidden;
+      }
+    }
+  }
+
+}

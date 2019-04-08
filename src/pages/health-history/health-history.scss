@@ -1,4 +1,10 @@
 page-health-history {
+  // 空值缺省
+  .value-container:empty::before {
+    content: '-';
+    color: #999;
+  }
+
   .history-list {
     .list-item {
       padding-left: 0 !important;
@@ -20,6 +26,15 @@ page-health-history {
       .input-wrapper {
         padding-left: 1rem;
       }
+
+      &.fev-serious {
+        .item-span {
+        }
+        .item-span.fixed-span {
+        }
+      }
     }
+
+
   }
 }

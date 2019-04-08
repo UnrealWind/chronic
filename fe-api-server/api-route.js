@@ -64,15 +64,16 @@ router.post('/wechat/patient/save', function(req, res, next) {
 
   var data = mockjs.mock({
     "data": {
-      "id": 2,
-      "openId": "12123",
-      "name": "quinn",
-      "idcard": "123441",
+      "id": 1,
+      "openId": "ozfiu1DQpGUBVPyFtoPlfKUozjbo",
+      "name": "p",
+      "idcard": "3434",
       "cardType": "1",
-      "cardNo": "123123123",
-      "xlPatientId": "",
-      "xlVisitId": "",
-      "patientId": "dfgdgfgg"
+      "cardNo": "1111",
+      "xlPatientId": '501_0020404703',
+      "xlVisitId": '501_2_1',
+      "patientId": "1111",
+      "type": "1"
     },
     "status": "ok",
     "description": "数据请求成功"
@@ -82,17 +83,30 @@ router.post('/wechat/patient/save', function(req, res, next) {
 
 router.get('/wechat/patient/openid/:openid', function(req, res, next) {
   var data = mockjs.mock({
-    "data": {
-      "id": 4,
-      "openId": "oXL5M1hpQ1Gcuc89MLsYgkLECHYE",
-      "name": "sadfsadfsd",
-      "idcard": "sdfasdfas",
+    "data": [{
+      "id": 1,
+      "openId": "ozfiu1DQpGUBVPyFtoPlfKUozjbo",
+      "name": "p",
+      "idcard": "3434",
       "cardType": "1",
-      "cardNo": "sadfasdfasdf",
-      "xlPatientId": null,
-      "xlVisitId": null,
-      "patientId": "123123123123s"
+      "cardNo": "1111",
+      "xlPatientId": '501_0001182297',
+      "xlVisitId": '501_2_5',
+      "patientId": "123456",
+      "type": "1"
     },
+    {
+        "id": 2,
+        "openId": "ozfiu1DQpGUBVPyFtoPlfKUozjbo",
+        "name": "测试",
+        "idcard": "130928198906666520",
+        "cardType": "1",
+        "cardNo": "123456",
+        "xlPatientId": null,
+        "xlVisitId": null,
+        "patientId": "123456",
+        "type": "0"
+    }],
     "status": "ok",
     "description": "数据请求成功"
   });
@@ -186,7 +200,7 @@ router.get('/lian/save/data/:patientId', function(req, res, next) {
       "bloodOxygen": {
         "id": 2,
         "level": 2,
-        "spoValue": 95,
+        "heartRate": 95,
         "typeId": 9,
         "dataId": 48,
         "levelName": "正常"
@@ -251,12 +265,9 @@ router.get('/lian/save/corresponding/save', function(req, res, next) {
  */
 router.get(`/lian/save/historicalrecord/get`, (req, res, next) => {
   var data = mockjs.mock({
-    data: `[{"time": "2019-02-21" ,"id":1,"level":2,"spoValue":96,"typeId":9,"dataId":4,"levelName":"正常"},
-          {"time": "2019-02-21" ,"id":2,"level":2,"spoValue":96,"typeId":9,"dataId":8,"levelName":"正常"},
-          {"time": "2019-02-21" ,"id":3,"level":2,"spoValue":96,"typeId":9,"dataId":9,"levelName":"正常"},
-                {"time": "2019-02-21" ,"id":4,"level":2,"spoValue":96,"typeId":9,"dataId":20,"levelName":"正常"}]`,
-    status: "ok",
-    description: "数据请求成功"
+    "data":'[{\"id\":2,\"level\":2,\"heartRate\":98,\"typeId\":9,\"dataId\":9,\"levelName\":\"正常\",\"time\":\"2019-02-17 09:01:29\"},{\"id\":3,\"level\":2,\"heartRate\":98,\"typeId\":9,\"dataId\":17,\"levelName\":\"正常\",\"time\":\"2019-02-17 09:01:40\"},{\"id\":4,\"level\":2,\"heartRate\":98,\"typeId\":9,\"dataId\":21,\"levelName\":\"正常\",\"time\":\"2019-02-17 09:02:04\"},{\"id\":5,\"level\":2,\"heartRate\":97,\"typeId\":9,\"dataId\":28,\"levelName\":\"正常\",\"time\":\"2019-02-17 09:02:04\"},{\"id\":6,\"level\":2,\"heartRate\":97,\"typeId\":9,\"dataId\":34,\"levelName\":\"正常\",\"time\":\"2019-02-17 09:02:20\"},{\"id\":7,\"level\":2,\"heartRate\":98,\"typeId\":9,\"dataId\":42,\"levelName\":\"正常\",\"time\":\"2019-02-17 09:03:33\"},{\"id\":8,\"level\":2,\"heartRate\":97,\"typeId\":9,\"dataId\":49,\"levelName\":\"正常\",\"time\":\"2019-02-18 08:46:54\"},{\"id\":9,\"level\":2,\"heartRate\":95,\"typeId\":9,\"dataId\":54,\"levelName\":\"正常\",\"time\":\"2019-02-18 08:46:54\"},{\"id\":10,\"level\":2,\"heartRate\":98,\"typeId\":9,\"dataId\":63,\"levelName\":\"正常\",\"time\":\"2019-02-18 08:47:31\"},{\"id\":11,\"level\":2,\"heartRate\":96,\"typeId\":9,\"dataId\":73,\"levelName\":\"正常\",\"time\":\"2019-02-18 08:48:37\"},{\"id\":12,\"level\":1,\"heartRate\":94,\"typeId\":9,\"dataId\":74,\"levelName\":\"失饱和状态\",\"time\":\"2019-02-19 14:41:13\"},{\"id\":13,\"level\":2,\"heartRate\":97,\"typeId\":9,\"dataId\":79,\"levelName\":\"正常\",\"time\":\"2019-02-19 14:41:56\"},{\"id\":14,\"level\":2,\"heartRate\":98,\"typeId\":9,\"dataId\":90,\"levelName\":\"正常\",\"time\":\"2019-02-19 14:43:12\"},{\"id\":15,\"level\":2,\"heartRate\":98,\"typeId\":9,\"dataId\":100,\"levelName\":\"正常\",\"time\":\"2019-02-19 14:43:24\"},{\"id\":16,\"level\":2,\"heartRate\":97,\"typeId\":9,\"dataId\":109,\"levelName\":\"正常\",\"time\":\"2019-02-19 14:43:54\"}]',
+    "status":"ok",
+    "description":"数据请求成功"
   })
 
   res.json(data)

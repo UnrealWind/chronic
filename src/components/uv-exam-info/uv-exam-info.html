@@ -1,0 +1,30 @@
+<!-- 门诊住院 诊断信息 -->
+<ion-list>
+  <ion-list-header>
+    <ion-icon name='ios-paper-outline' color="primary"></ion-icon>&nbsp; 诊断信息
+  </ion-list-header>
+  <div *ngIf="renderData != 'err' && renderData?.length > 0"
+       class="list-wrapper"
+       (click)="collapse($event)">
+    <ion-item *ngFor="let item of renderData">
+      <dl class="list-item-wrapper">
+        <dt class="left-label first-title value-container">{{item.diag_type}}</dt>
+        <!-- <dd class="right-label time value-container">{{item.diagnosis_date}}</dd> -->
+
+        <!-- 诊断子类型 -->
+        <dt class="left-label sub-title value-container">{{item.diag_type_sub}}</dt>
+        <dd class="right-label sub-content value-container">{{item.diagnosis_desc}}</dd>
+      </dl>
+    </ion-item>
+
+    <!-- 更多 -->
+    <a  *ngIf="renderData?.length > 3"
+        href="javascript:;" data-collapse="close"  class="more">更多↓</a>
+  </div>
+
+  <!-- 无数据 -->
+  <ion-item *ngIf="renderData != 'err' && renderData?.length == 0">
+    <p class="value-container"></p>
+  </ion-item>
+
+</ion-list>

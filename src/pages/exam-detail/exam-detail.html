@@ -1,27 +1,37 @@
 <ion-content >
   <ion-list>
     <ion-list-header>
-      <ion-icon name='ios-paper-outline' color="primary"></ion-icon>&nbsp;血常规
+      <ion-icon name='ios-paper-outline' color="primary"></ion-icon>&nbsp; {{title}}
       <button ion-button round item-end (click)="back()">返回</button>
     </ion-list-header>
     <ion-item>
-      <h2 class="no-margin-top">血常规异常项目</h2>
-      <p style="white-space: normal">白细胞偏高、红细胞偏低、血小板偏高、红细胞比积偏高</p>
+      <h2 class="no-margin-top content-wrap">{{title}}异常项目</h2>
+      <p class="content-wrap" *ngIf="abnormalData.higher.length > 0">
+        <span *ngFor="let item of abnormalData.higher">
+          {{item.test_item_name}}偏高&nbsp;&nbsp;&nbsp;&nbsp;
+        </span>
+      </p>
+
+      <p class="content-wrap sepreate" *ngIf="abnormalData.lower.length > 0">
+        <span *ngFor="let item of abnormalData.lower">
+          {{item.test_item_name}}偏低&nbsp;&nbsp;&nbsp;&nbsp;
+        </span>
+      </p>
+
     </ion-item>
   </ion-list>
-  <table class="table table-bordered">
+
+  <table class="table table-bordered"
+         *ngIf="renderData != 'err' && renderData?.length > 0">
     <tbody>
-    <tr>
-      <td>白细胞计数</td>
-      <td>14 10^9/L</td>
-      <td> <ion-icon name="md-arrow-round-up" color="danger"></ion-icon> </td>
-      <td>4~10 10^9/L</td>
-    </tr>
-    <tr>
-      <td>白细胞计数</td>
-      <td>14 10^9/L</td>
-      <td> <ion-icon name="md-arrow-round-down" color="secondary"></ion-icon> </td>
-      <td>4~10 10^9/L</td>
+    <tr *ngFor="let item of renderData">
+      <td class="value-container">{{item.test_item_name}}</td>
+      <td class="value-container">{{item.result}}</td>
+      <td>
+        <ion-icon *ngIf="item.abnormal_name == '高'" name="md-arrow-round-up" color="danger"></ion-icon>
+        <ion-icon *ngIf="item.abnormal_name == '低'" name="md-arrow-round-down" style="color: #ccc;"></ion-icon>
+      </td>
+      <td class="value-container">{{item.prin_cont}}</td>
     </tr>
     </tbody>
   </table>

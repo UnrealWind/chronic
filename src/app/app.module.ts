@@ -27,12 +27,17 @@ import { ExamDetailPage} from "../pages/exam-detail/exam-detail"
 import { BindDevicePage} from "../pages/bind-device/bind-device";
 import { DeviceListPage} from "../pages/device-list/device-list";
 import { HealthHistoryPage } from "../pages/health-history/health-history";
+import { AddPatiPage } from '../pages/add-pati/add-pati';
+import { TestEchartsPage} from "../pages/test-echarts/test-echarts";
+import { UvHospitalPage } from '../pages/uv-hospital/uv-hospital';
+import { UvDepartmentPage } from '../pages/uv-department/uv-department';
 
 //默认配置文件
 import { ConstantProvider } from '../providers/constant/constant';
 import { BasicProvider} from "../providers/basic/basic";
 import { ViewTmpDataProvider} from "../providers/view-tmp-data/view-tmp-data";
 import { ApiServiceProvider } from '../providers/api-service/api-service';
+import { UtilsProvider } from '../providers/utils/utils';
 
 
 //以前写的有问题，应该在这里增加子页面的module
@@ -50,6 +55,11 @@ import { CheckDetailPageModule} from "../pages/check-detail/check-detail.module"
 import { ExamDetailPageModule} from "../pages/exam-detail/exam-detail.module";
 import { BindDevicePageModule} from "../pages/bind-device/bind-device.module";
 import { DeviceListPageModule} from "../pages/device-list/device-list.module";
+import { SessionStorageProvider } from '../providers/session-storage/session-storage';
+import { AddPatiPageModule } from '../pages/add-pati/add-pati.module';
+import { TestEchartsPageModule} from "../pages/test-echarts/test-echarts.module";
+import { UvHospitalPageModule } from '../pages/uv-hospital/uv-hospital.module';
+import { UvDepartmentPageModule } from '../pages/uv-department/uv-department.module';
 
 @NgModule({
   declarations: [
@@ -86,7 +96,11 @@ import { DeviceListPageModule} from "../pages/device-list/device-list.module";
     CheckDetailPageModule,
     ExamDetailPageModule,
     BindDevicePageModule,
-    DeviceListPageModule
+    DeviceListPageModule,
+    AddPatiPageModule,
+    TestEchartsPageModule,
+    UvHospitalPageModule,
+    UvDepartmentPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -106,7 +120,11 @@ import { DeviceListPageModule} from "../pages/device-list/device-list.module";
     ExamDetailPage,
     BindDevicePage,
     DeviceListPage,
-    HealthHistoryPage
+    HealthHistoryPage,
+    AddPatiPage,
+    TestEchartsPage,
+    UvHospitalPage,
+    UvDepartmentPage
   ],
   providers: [
     StatusBar,
@@ -117,7 +135,9 @@ import { DeviceListPageModule} from "../pages/device-list/device-list.module";
     ConstantProvider,
     BasicProvider,
     ApiServiceProvider,
-    ViewTmpDataProvider
+    ViewTmpDataProvider,
+    SessionStorageProvider,
+    UtilsProvider
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

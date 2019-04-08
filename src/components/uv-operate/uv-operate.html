@@ -1,0 +1,33 @@
+<!-- 住院手术信息 -->
+<ion-list>
+  <ion-list-header>
+    <ion-icon name='ios-paper-outline' color="primary"></ion-icon>&nbsp; 手术信息
+  </ion-list-header>
+
+  <div *ngIf="renderData != 'err' && renderData?.length > 0"
+       class="list-wrapper"
+       (click)="collapse($event)">
+    <ion-item *ngFor="let opreat of renderData">
+      <dl class="list-item-wrapper">
+        <dt class="first-title">{{opreat.operation_name}}</dt>
+        <dd class="time">{{opreat.operating_date}}</dd>
+      </dl>
+
+      <!-- 手术子信息 -->
+      <div class="sub-line">
+        <span class="sub-item"><span class="sub-title">术前：</span><span class="value-container">{{opreat.diag_before_operation}}</span></span>
+        <span class="sub-item"><span class="sub-title">术后：</span><span class="value-container">{{opreat.diag_after_operation}}</span></span>
+        <span class="sub-item"><span class="sub-title">医生：</span><span class="value-container">{{opreat.operator}}</span></span>
+      </div>
+    </ion-item>
+
+    <!-- 更多 -->
+    <a  *ngIf="renderData?.length > 3"
+        href="javascript:;" data-collapse="close"  class="more">更多↓</a>
+  </div>
+
+  <!-- 无数据 -->
+  <ion-item *ngIf="renderData != 'err' && renderData?.length == 0">
+    <p class="value-container"></p>
+  </ion-item>
+</ion-list>

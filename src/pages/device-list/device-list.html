@@ -1,16 +1,33 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>设备列表</ion-title>
+  </ion-navbar>
+</ion-header>
+
 <ion-content >
     <ion-list>
       <ion-list-header>
-        <ion-icon name='planet' color="primary"></ion-icon> &nbsp;绑定设备列表
+        绑定设备列表
         <button ion-button round item-end (click)="newBind()">新增设备</button>
       </ion-list-header>
+
       <ion-item *ngIf="!list || list.length == 0">
         <h2 class="no-margin-top">暂无信息，请先进行设备绑定！</h2>
       </ion-item>
-      <ion-item *ngFor="let opt of list;let index = index">
-        <h2 class="no-margin-top">设备名称：{{opt.type}}</h2>
-        <p>设备硬件ID：{{opt.deviceId}}</p>
-      </ion-item>
+
+      <ion-item-sliding *ngFor="let opt of list;let index = index" #item>
+        <ion-item>
+          <h2 class="no-margin-top">设备名称：{{opt.type}}</h2>
+          <p>设备硬件ID：{{opt.deviceId}}</p>
+        </ion-item>
+
+        <ion-item-options side="right">
+          <!-- 删除 -->
+          <button ion-button color="danger" (click)="deleDevice(opt)">
+            <ion-icon name="trash"></ion-icon>
+            删除
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
     </ion-list>
-  <button ion-button block (click)="back()">返回</button>
 </ion-content>

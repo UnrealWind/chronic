@@ -1,67 +1,163 @@
 <ion-content >
-  <ion-list>
-    <ion-list-header>
-      <ion-icon name='planet' color="primary"></ion-icon> &nbsp;个体化方案
-      <button ion-button round item-end (click)="goPlanDetail()">查看方案详情</button>
-    </ion-list-header>
-  </ion-list>
-  <ion-segment [(ngModel)]="lists"
-               (ionChange)="segmentChanged($event)">
-    <ion-segment-button value="全部">
-      全部
-    </ion-segment-button>
-    <ion-segment-button value="住院">
-      住院
-    </ion-segment-button>
-    <ion-segment-button value="门诊">
-      门诊
-    </ion-segment-button>
-    <ion-segment-button value="体检">
-      体检
-    </ion-segment-button>
-    <ion-segment-button value="个体化方案">
-      个体化方案
-    </ion-segment-button>
-  </ion-segment>
-
-
-  <div [ngSwitch]="lists">
-    <!-- 全部 -->
-    <ion-list *ngSwitchCase="'全部'">
-      <div *ngIf="allGroup">
-        <ion-item *ngFor="let group of allGroup"
-                  (click)="goPlanDetail()">
-          <h2 class="no-margin-top">{{ group.schemeGroupName }}</h2>
-          <ion-icon color="primary" name="ios-arrow-forward-outline" item-end></ion-icon>
-        </ion-item>
-      </div>
-
-      <ion-item *ngIf="!allGroup">
-        <h2 class="text-center">暂无数据</h2>
-      </ion-item>
+    <ion-list>
+      <ion-list-header>
+        健康档案
+        <button ion-button round item-end (click)="goPlanDetail()">查看方案执行</button>
+      </ion-list-header>
     </ion-list>
+    <ion-segment [(ngModel)]="lists"
+                 (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="全部">
+        全部
+      </ion-segment-button>
+      <ion-segment-button value="住院">
+        住院
+      </ion-segment-button>
+      <ion-segment-button value="门诊">
+        门诊
+      </ion-segment-button>
+      <ion-segment-button value="体检">
+        体检
+      </ion-segment-button>
+      <ion-segment-button value="个体化方案">
+        个体化方案
+      </ion-segment-button>
+    </ion-segment>
 
-    <!-- 个体化方案 -->
-    <ion-list *ngSwitchCase="'个体化方案'" class="custom-plan-wrapper">
-      <div *ngIf="patiPlan">
-        <div *ngFor="let plan of patiPlan" class="plan-item">
-          <ion-list-header class="item-title-wrapper"><ion-icon name="list-box-outline"></ion-icon> <span>{{plan.name}}</span></ion-list-header>
-          <div *ngIf="plan.schemeTemplate.schemeMaterials.length > 0">
-            <ion-item *ngFor="let singleLine of plan.schemeTemplate.schemeMaterials" no-lines>
-                <single-line [preMapLevel]="currGroup.type + '.'  + plan.type + '.content'"
-                             [singleItem]="singleLine"></single-line>
+
+    <div [ngSwitch]="lists">
+      <!-- 全部 -->
+      <ion-list *ngSwitchCase="'全部'" class="all-panel-list">
+        <!-- 个体化方案 -->
+        <ion-item-group *ngIf="allGroup?.length > 0">
+          <ion-item-divider class="group-divider-wrapper" color="light"><ion-icon ios="ios-body" md="md-body" class="group-icon"></ion-icon><span class="group-title">个体化方案</span></ion-item-divider>
+          <ion-item *ngFor="let group of allGroup"
+                    (click)="goPlanDetail()"
+                    class="list-item">
+            <h2 class="no-margin-top content-wrap"><span class="groupItem-title">个体化方案</span> {{ group.schemeGroupName }}</h2>
+            <ion-icon color="primary" name="ios-arrow-forward-outline" item-end></ion-icon>
+          </ion-item>
+        </ion-item-group>
+
+        <!-- 住院 -->
+        <ion-item-group *ngIf="hospitalData?.length > 0">
+          <ion-item-divider class="group-divider-wrapper" color="light"><ion-icon ios="ios-medkit" md="md-medkit" class="group-icon"></ion-icon><span class="group-title">住院</span></ion-item-divider>
+          <ion-item *ngFor="let time of hospitalData"
+                    (click)="goDetail(time.medical_type_id,{
+                      xlPatientId: time.xl_patient_id,
+                      xlMedicalId: time.xl_medical_id
+                    })"
+                    class="list-item">
+            <h2 class="no-margin-top content-wrap"><span class="groupItem-title">{{time.title}}</span></h2>
+            <ion-icon color="primary" name="ios-arrow-forward-outline" item-end></ion-icon>
+            <h3>{{time.note}}</h3>
+            <p>{{time.medical_date | date: 'yyyy-MM-dd'}}</p>
+          </ion-item>
+        </ion-item-group>
+
+        <!-- 门诊 -->
+        <ion-item-group *ngIf="depData?.length > 0">
+          <ion-item-divider class="group-divider-wrapper" color="light"><ion-icon ios="ios-medical" md="md-medical" class="group-icon"></ion-icon><span class="group-title">门诊</span></ion-item-divider>
+          <ion-item *ngFor="let time of depData"
+                    (click)="goDetail(time.medical_type_id, {
+                      xlPatientId: time.xl_patient_id,
+                      xlMedicalId: time.xl_medical_id
+                    })"
+                    class="list-item">
+            <h2 class="no-margin-top content-wrap"><span class="groupItem-title">{{time.title}}</span></h2>
+            <ion-icon color="primary" name="ios-arrow-forward-outline" item-end></ion-icon>
+            <h3>{{time.note}}</h3>
+            <p>{{time.medical_date | date: 'yyyy-MM-dd'}}</p>
+          </ion-item>
+        </ion-item-group>
+
+
+        <ion-item *ngIf="allGroup?.length == 0 && timelineData?.length == 0">
+          <h2 class="text-center">暂无数据</h2>
+        </ion-item>
+
+        <ion-item *ngIf="allGroup === null || timelineData === null">
+          <h2 class="text-center text-danger">请求出错了</h2>
+        </ion-item>
+      </ion-list>
+
+      <!-- 住院 -->
+      <ion-list *ngSwitchCase="'住院'" class="all-panel-list">
+        <div *ngIf="hospitalData?.length > 0">
+          <div *ngFor="let hos of hospitalData">
+            <ion-item (click)="goDetail(hos.medical_type_id, {
+                        xlPatientId: hos.xl_patient_id,
+                        xlMedicalId: hos.xl_medical_id
+                      })"
+                      class="list-item">
+              <h2 class="no-margin-top"><span class="groupItem-title">{{hos.title}}</span>{{hos.note}}</h2>
+              <ion-icon color="primary" name="ios-arrow-forward-outline" item-end></ion-icon>
             </ion-item>
           </div>
         </div>
-      </div>
+        <!-- 暂无数据 -->
+        <ion-item *ngIf="hospitalData?.length == 0">
+          <h2 class="text-center">暂无数据</h2>
+        </ion-item>
+      </ion-list>
 
-      <div *ngIf="!patiPlan">
+      <ion-list *ngSwitchCase="'门诊'" class="all-panel-list">
+        <div *ngIf="depData?.length > 0">
+          <div *ngFor="let dep of depData">
+            <ion-item *ngIf="dep.medical_type_id == '2'"
+                      (click)="goDetail(dep.medical_type_id, {
+                        xlPatientId: dep.xl_patient_id,
+                        xlMedicalId: dep.xl_medical_id
+                      })"
+                      class="list-item">
+              <h2 class="no-margin-top"><span class="groupItem-title">{{dep.title}}</span>{{dep.note}}</h2>
+              <ion-icon color="primary" name="ios-arrow-forward-outline" item-end></ion-icon>
+            </ion-item>
+          </div>
+        </div>
+        <!-- 暂无数据 -->
+        <ion-item *ngIf="depData?.length == 0">
+          <h2 class="text-center">暂无数据</h2>
+        </ion-item>
+      </ion-list>
+
+      <!-- 体检 -->
+      <ion-list *ngSwitchCase="'体检'" class="all-panel-list">
+        <!-- 暂无数据 -->
         <ion-item>
           <h2 class="text-center">暂无数据</h2>
         </ion-item>
-      </div>
+      </ion-list>
 
-    </ion-list>
-  </div>
+
+
+      <!-- 个体化方案 -->
+      <ion-list *ngSwitchCase="'个体化方案'" class="custom-plan-wrapper all-panel-list">
+        <div *ngIf="patiPlan?.length > 0">
+          <div *ngFor="let plan of patiPlan" class="plan-item">
+            <ion-list-header class="item-title-wrapper"><ion-icon name="list-box-outline"></ion-icon> <span>{{plan.name}}</span></ion-list-header>
+            <div *ngIf="plan.schemeTemplate.schemeMaterials.length > 0">
+              <ion-item *ngFor="let singleLine of plan.schemeTemplate.schemeMaterials" no-lines>
+                  <single-line [preMapLevel]="currGroup.type + '.'  + plan.type + '.content'"
+                               [singleItem]="singleLine"></single-line>
+              </ion-item>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="patiPlan?.length == 0">
+          <ion-item>
+            <h2 class="text-center">暂无数据</h2>
+          </ion-item>
+        </div>
+
+        <div *ngIf="patiPlan === null">
+          <ion-item>
+            <h2 class="text-center text-danger">请求出错了</h2>
+          </ion-item>
+        </div>
+
+      </ion-list>
+    </div>
 
 </ion-content>

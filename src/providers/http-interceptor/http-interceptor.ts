@@ -49,7 +49,8 @@ export class Interceptor implements HttpInterceptor {
           this.loading._state == 1 ? this.loading.dismiss() : undefined;
           return Observable.create(observer => observer.error(event));
         }else if(event instanceof HttpResponse && event.status == 200){
-          event.body.status == 'error' || event.body.success == 'error'|| event.body.sucess == 'error'?this.showError(500,event.body):'';
+          event.body.status == 'error' || event.body.success == 'error'|| event.body.sucess == 'error'? undefined :'';
+          // event.body.status == 'error' || event.body.success == 'error'|| event.body.sucess == 'error'?this.showError(500,event.body):'';
           Observable.throw('error');
         }
 
@@ -61,17 +62,17 @@ export class Interceptor implements HttpInterceptor {
         this.loading._state == 1 ? this.loading.dismiss() : undefined;
         switch (res.status) {
           case 400:
-            this.showError(400,null);
+            // this.showError(400,null);
             break;
           case 401:
             // 权限处理
             location.href = ''; // 重新登录
             break;
           case 404:
-            this.showError(404,null);
+            // this.showError(404,null);
             break;
           case 500:
-            this.showError(500,null);
+            // this.showError(500,null);
             break;
         }
         // 以错误的形式结束本次请求

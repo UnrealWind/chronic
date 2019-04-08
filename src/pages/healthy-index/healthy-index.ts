@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, LoadingController, ToastController ,AlertController} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, LoadingController, ToastController ,AlertController, Refresher} from 'ionic-angular';
 import { HealthyRecordPage} from "../healthy-record/healthy-record";
-import { BindUserPage} from "../bind-user/bind-user";
 import { TimeClockPage} from "../time-clock/time-clock";
 import {HttpClient} from "@angular/common/http";
 import {ConstantProvider} from "../../providers/constant/constant";
-import {BasicProvider} from "../../providers/basic/basic";
-import { ApiServiceProvider } from "../../providers/api-service/api-service"
 import * as $ from 'jquery';
+
+// service
+import { ApiServiceProvider } from "../../providers/api-service/api-service";
+import { UtilsProvider } from "../../providers/utils/utils";
+// sessionStorage
+import { SessionStorageProvider } from "../../providers/session-storage/session-storage";
+
 // 页面
 import { HealthHistoryPage } from "../health-history/health-history";
 
@@ -21,11 +25,9 @@ import { common } from '../../api-data-struc/api-data-struc'
   templateUrl: 'healthy-index.html',
 })
 export class HealthyIndexPage {
-  code; //获取code用于给后台换取access_token，openid等信息，这两个信息用于换取用户所有信息，这里官方文档说是安全级别较高，所以要在后台进行换取，不允许客户端进行请求
-  userInfo; //这个东西就存放后台通过一些列操作返回的用户信息咯
-  params; //账号绑定页面绑定信息
+  // 是否重新验证绑定
+  rerend:boolean = false
 
-  info;
 
   // 健康数据
   healthDatas: object[] = null
@@ -40,12 +42,14 @@ export class HealthyIndexPage {
     public load: LoadingController,
     public http:HttpClient,
     public Constant:ConstantProvider,
-    private BasicProvider:BasicProvider,
+    private ss: SessionStorageProvider,
     public api: ApiServiceProvider,
-    public totast: ToastController
+    public totast: ToastController,
+    public utils: UtilsProvider
   ) {
-    this.params = {};
-
+    /**
+     * 防止页面回退
+     */
     $(function() {
       if (window.history && window.history.pushState) {
         $(window).on('popstate', function () {
@@ -56,84 +60,29 @@ export class HealthyIndexPage {
       window.history.pushState('forward', null, '#'); //在IE中必须得有这两行
       window.history.forward();
     })
+
   }
 
   ionViewDidEnter(): void {
-    var that = this;
-    this.code = this.BasicProvider.getQueryString('code');
-    !this.code?(function () {
-      window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?' +
-        'appid='+ that.Constant.AppId +
-        '&redirect_uri='+ that.Constant.redirect_url +
-        '&response_type=code&' +
-        'scope=snsapi_userinfo#wechat_redirect';
-    })():(function () {
-      if(sessionStorage.getItem('wechatUserInfo')) {
-        that.userInfo = JSON.parse(sessionStorage.getItem('wechatUserInfo'))
-        that.setPatientId();
-      } else {
-        that.getUserInfo()
-      }
-    })()
+    setTimeout(() => {
+      this.rerend = true
+    }, 0);
   };
 
   ionViewDidLeave() {
-    // 清除缓存数据
-    this.code = null; //获取code用于给后台换取access_token，openid等信息，这两个信息用于换取用户所有信息，这里官方文档说是安全级别较高，所以要在后台进行换取，不允许客户端进行请求
-    this.userInfo = null //这个东西就存放后台通过一些列操作返回的用户信息咯
-    this.params = {} //账号绑定页面绑定信息
-
-    this.info = null
-
-    // 健康数据
-    this.healthDatas = null
-    // 患者当天个体化方案计划执行情况
-    this.healthPlan = null
-    this.fixedHealthPlan = {}
+    this.rerend = false
   }
 
-  getUserInfo = function () {
-    var that = this;
-    this.http.get(this.Constant.BackstageUrl+'/wechat/oauth2/get/user?code='+this.code,{})
-      .subscribe((res)=>{
-        that.userInfo  = res.data;
-        sessionStorage.setItem('wechatUserInfo', JSON.stringify(res.data))
-        that.setPatientId();
-        console.log(that.userInfo)
-
-      });
+  /**
+   * 页面初始，不是 ionic page 的生命周期
+   */
+  init(param) {
+    // 获取用户信息
+    this.getInfo();
+    // 获取患者所在护理组
+    this.getPatiGroup()
   }
 
-  setPatientId = function(){
-    var that = this;
-    that.params['openId'] = that.userInfo.openId;
-    that.http.get(that.Constant.BackstageUrl+'/wechat/patient/openid/'+that.userInfo.openId,{})
-      .subscribe((res)=>{
-        if(res.data != null) {
-          that.params = res.data,sessionStorage.setItem('patientId',res.data.patientId)
-          // 获取用户所在护理组
-          that.getPatiGroup()
-        } else {
-          (function () {
-            const alert = that.alertCtrl.create({
-              title: '警告',
-              subTitle: '请先进行账号绑定操作！',
-              buttons: [{
-                text: '前往绑定',
-                handler: data => {
-                  that.navCtrl.push(BindUserPage,{params:that.params})
-                }
-              }],
-              enableBackdropDismiss: false
-            });
-            alert.present();
-            return;
-          })();
-        }
-
-        console.log(res.data)
-      });
-  }
 
   /**
    * 获取患者所在护理组
@@ -144,8 +93,6 @@ export class HealthyIndexPage {
         .subscribe((msg) => {
           that.setPatiGroup(msg.data[0])
 
-          // 获取用户信息
-          this.getInfo();
           // 获取患者当天个体化方案计划执行情况
           this.getCustomPlan()
         })
@@ -155,7 +102,7 @@ export class HealthyIndexPage {
    * 存储患者所在护理组
    */
   setPatiGroup = function(currGroup) {
-    sessionStorage.setItem('currGroup', JSON.stringify(currGroup))
+    this.ss.set('currGroup', currGroup)
   }
 
 
@@ -170,12 +117,24 @@ export class HealthyIndexPage {
   /**
    * 获取健康数据
    */
-  getInfo = function(){
-    this.http.get(this.Constant.BackstageUrl+'/lian/save/data/'+sessionStorage.getItem('patientId'),this.params)
+  getInfo = function(type?){
+    if(type) {
+      var loading = this.load.create({
+        content: '获取健康数据中...'
+      })
+
+      loading.present()
+    }
+
+
+    this.http.get(this.Constant.BackstageUrl+'/lian/save/data/'+ this.ss.get('patientId'),this.params)
       .subscribe((res)=>{
         //这里强行校验一下
         res.data == '{}' || res.data =='' ?res.data = null:'';
         this.info = res.data
+
+        type ? loading.dismiss() : undefined
+        type ? loading = null : undefined
 
         // 渲染健康数据用的模板数据
         this.healthDatas = [
@@ -191,11 +150,11 @@ export class HealthyIndexPage {
                 {
                   type: 0,
                   txt: 'BMI',
-                  val: this.info.bodyIndex.bmi
+                  val:  this.utils.getSafe(() => this.info.bodyIndex.bmi, null)
                 }
               ],
               detail: {
-                txt: this.info.bodyIndex.bmiLevel,
+                txt: this.utils.getSafe(() => this.info.bodyIndex.bmiLevel, null),
                 color: '#ccc'
               }
             },
@@ -210,16 +169,16 @@ export class HealthyIndexPage {
                 {
                   type: 0,
                   txt: 'H',
-                  val: this.info.bloodPressure.highValue
+                  val: this.utils.getSafe(() => this.info.bloodPressure.highValue, null)
                 },
                 {
                   type: 0,
                   txt: 'L',
-                  val: this.info.bloodPressure.lowValue
+                  val: this.utils.getSafe(() => this.info.bloodPressure.lowValue, null)
                 }
               ],
               detail: {
-                txt: this.info.bloodPressure.level,
+                txt: this.utils.getSafe(() => this.info.bloodPressure.level, null),
                 color: '#ccc'
               }
             },
@@ -234,11 +193,11 @@ export class HealthyIndexPage {
                 {
                   type: 1,
                   txt: '次/分',
-                  val: this.info.ecg.heartRate
+                  val: this.utils.getSafe(() => this.info.ecg.heartRate, null)
                 }
               ],
               detail: {
-                txt: this.info.ecg.levelName,
+                txt: this.utils.getSafe(() => this.info.ecg.levelName, null),
                 color: 'red'
               }
             },
@@ -255,7 +214,7 @@ export class HealthyIndexPage {
                 {
                   type: 1,
                   txt: '%',
-                  val: this.info.bloodOxygen.spoValue
+                  val: this.utils.getSafe(() => this.info.bloodOxygen.spoValue, null)
                 }
               ],
               detail: null
@@ -271,7 +230,7 @@ export class HealthyIndexPage {
                 {
                   type: 0,
                   txt: null,
-                  val: this.info.bloodFat.level
+                  val: this.utils.getSafe(() => this.info.bloodFat.level, null)
                 }
               ],
               detail: null
@@ -287,7 +246,7 @@ export class HealthyIndexPage {
                 {
                   type: 0,
                   txt: null,
-                  val: this.info.temperature.bodyTemperature
+                  val: this.utils.getSafe(() => this.info.temperature.bodyTemperature, null)
                 }
               ],
               detail: null
@@ -295,7 +254,7 @@ export class HealthyIndexPage {
           ],
           [
             { // Fev1
-              index: 0,
+              index: 'fev1',
               type: 0,
               title: {
                 icon: 'ios-alert-outline',
@@ -305,13 +264,13 @@ export class HealthyIndexPage {
                 {
                   type: 0,
                   txt: null,
-                  val: this.info.fev1Value
+                  val: this.utils.getSafe(() => this.info.fev1Value, null)
                 }
               ],
               detail: null
             },
             { // Fvc
-              index: 0,
+              index: 'fvc',
               type: 0,
               title: {
                 icon: 'ios-aperture-outline',
@@ -321,13 +280,13 @@ export class HealthyIndexPage {
                 {
                   type: 0,
                   txt: null,
-                  val: this.info.fvcValue
+                  val: this.utils.getSafe(() => this.info.fvcValue, null)
                 }
               ],
               detail: null
             },
             { // Pef
-              index: 0,
+              index: 'pef',
               type: 0,
               title: {
                 icon: 'ios-clipboard-outline',
@@ -337,7 +296,7 @@ export class HealthyIndexPage {
                 {
                   type: 0,
                   txt: null,
-                  val: this.info.pefValue
+                  val: this.utils.getSafe(() => this.info.pefValue, null)
                 }
               ],
               detail: null
@@ -354,22 +313,61 @@ export class HealthyIndexPage {
   getHealthHistory(item) {
     if(item.index === 0) return
     else {
+      // 类型和数据字段对应关系
+      let fieldMap = {
+        '1': 'bloodPressure',
+        '6': 'weight',
+        '10': 'heartRate',
+        '9': 'bloodOxygen',
+        '7': 'bloodFat',
+        '14': 'temperature'
+      }
+
+
       let loading = this.load.create({
         content: '获取历史记录中...'
       });
 
       loading.present();
 
-      this.api.healthIndex.getHealthHistory(sessionStorage.getItem('patientId'), item.index)
+      // 这三个类型 url 里需要多加一个 breath 参数
+      var excpetTye = ['fev1', 'pef', 'fvc']
+      var param = null
+
+      if(excpetTye.indexOf(item.index) >= 0) param = { pId: this.ss.get('patientId'), type: item.index, breath: item.index }
+      else param = { pId: this.ss.get('patientId'), type: item.index }
+
+      this.api.healthIndex.getHealthHistory(param)
         .subscribe(
           (msg) => {
             loading.dismiss();
-            var parsedData = msg['data'] == null ? [] : JSON.parse(msg['data'])
+            loading = null
+
+            var parsedData = []
+
+            if(msg['data'] !== null) {
+              let parsedObj = JSON.parse(msg['data'])
+
+              if(excpetTye.indexOf(item.index) >= 0) {
+                for(let key in parsedObj) {
+                  parsedData.push({
+                    'key': key,
+                    'value': parsedObj[key]
+                  })
+                }
+              } else {
+                parsedData = parsedObj
+              }
+            }
+
             this.navCtrl.push(HealthHistoryPage, {
               title: item.title.txt,
               index: item.index,
               data: parsedData
             })
+          }, (error) => {
+            loading.dismiss();
+            loading = null
           }
         )
     }
@@ -378,13 +376,24 @@ export class HealthyIndexPage {
   /**
    * 获取患者当天个体化方案计划执行情况
    */
-  getCustomPlan(): void {
-    var groupId = JSON.parse(sessionStorage.getItem('currGroup')).id
-    var patiId = sessionStorage.getItem('patientId')
+  getCustomPlan(type?): void {
+    var groupId = this.ss.get('currGroup').id
+    var patiId = this.ss.get('patientId')
 
+
+    if(type) {
+      var loading = this.load.create({
+        content: '获取个体化方案中...'
+      })
+
+      loading.present()
+    }
 
     this.api.healthyRecordDetail.getHealthPlan(groupId, patiId)
             .subscribe((msg: common) => {
+
+              type ? loading.dismiss() : undefined
+
               if(!msg.data || msg.data.length == 0) {
                 this.healthPlan = null
                 this.fixedHealthPlan = null
@@ -397,6 +406,18 @@ export class HealthyIndexPage {
             })
   }
 
+  /**
+   * 下拉刷新
+   */
+  doRefresh(refresher: Refresher) {
+    this.getCustomPlan(true)
+    this.getInfo(true)
+
+    setTimeout(() => {
+      refresher.complete();
+    }, 1200)
+
+  }
 
   fixCustomPlanData(orignalData) {
     var rst = {
@@ -468,9 +489,9 @@ export class HealthyIndexPage {
    */
   refreshData = function () {
     // 获取用户信息
-    this.getInfo();
+    this.getInfo(true);
     // 获取患者当天个体化方案计划执行情况
-    this.getCustomPlan()
+    this.getCustomPlan(true)
   }
 
 

@@ -1,0 +1,16 @@
+uv-physique {
+  // 空值缺省
+  .value-container:empty::before {
+    content: '-';
+    color: #999;
+  }
+
+  .list-wrapper {
+    padding: 0 1.6rem;
+    .item-label {
+      float: left;
+      clear: left;
+      margin-right: .8rem;
+    }
+  }
+}

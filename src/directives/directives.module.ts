@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { SortDataDirective } from './sort-data/sort-data';
+import { CheckPatiDirective } from './check-pati/check-pati';
 @NgModule({
-	declarations: [SortDataDirective],
+	declarations: [SortDataDirective,
+    CheckPatiDirective],
 	imports: [],
-	exports: [SortDataDirective]
+	exports: [SortDataDirective,
+    CheckPatiDirective]
 })
 export class DirectivesModule {}

@@ -1,6 +1,61 @@
+// _config.scss
+$breakpoints: (
+  'ss': 'only screen and ( min-width: 320px)',
+  'xs': 'only screen and ( min-width: 360px)',
+  'ms': 'only screen and ( min-width: 410px)',
+  'msb': 'only screen and ( min-width: 500px)',
+  'sm': 'only screen and ( min-width: 768px)',
+  'md': 'only screen and ( min-width: 992px)',
+  'lg': 'only screen and ( min-width: 1200px)',
+) !default;
+
+// _mixins.scss
+@mixin respond-to($breakpoint) {
+  $query: map-get($breakpoints, $breakpoint);
+
+  @if not $query {
+    @error 'No value found for `#{$breakpoint}`. Please make sure it is defined in `$breakpoints` map.';
+  }
+
+  @media #{if(type-of($query) == 'string', unquote($query), inspect($query))} {
+    @content;
+  }
+}
+
+html {
+  @include respond-to(ss) {
+    font-size: 54%;
+  }
+
+  @include respond-to(xs) {
+    font-size: 58%;
+  }
+
+  @include respond-to(ms) {
+    font-size: 60%;
+  }
+
+  @include respond-to(msb) {
+    font-size: 65%;
+  }
+
+  @include respond-to(sm) {
+    font-size: 75%;
+  }
+
+}
+
 ul {
   padding: 0;
   li {
     list-style: none;
   }
 }
+
+a {
+  text-decoration: none!important;
+  &:hover {
+    text-decoration: none!important;
+  }
+}
+

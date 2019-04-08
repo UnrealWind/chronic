@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {HttpClient} from "@angular/common/http";
+import {ConstantProvider} from '../../providers/constant/constant';
 
 @IonicPage()
 @Component({
@@ -8,11 +10,24 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class CheckDetailPage {
 
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams) {
+  // 页面展示的数据
+  detailData = null
 
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public Http:HttpClient,
+    public Constant:ConstantProvider
+  ) {
+    this.detailData = this.navParams.get('data')
   }
 
+
+
+  /**
+   * 返回
+   */
   back = function () {
     this.navCtrl.pop();
   }

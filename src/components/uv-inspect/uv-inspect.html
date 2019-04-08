@@ -1,0 +1,27 @@
+<!-- 门诊 住院 检验信息 -->
+<ion-list>
+  <ion-list-header>
+    <ion-icon name='ios-paper-outline' color="primary"></ion-icon>&nbsp;检验信息
+  </ion-list-header>
+
+  <div *ngIf="renderData != 'err' && renderData?.length > 0"
+      class="list-wrapper"
+      (click)="collapse($event)">
+    <ion-item *ngFor="let inspect of renderData"
+              (click)="goDetail(inspect)">
+      <h2 class="no-margin-top content-wrap">{{inspect.test_class}}</h2>
+      <p>{{inspect.results_rpt_date_time}}</p>
+      <button *ngIf="inspect.count > 0" ion-button round color="danger" small item-end>{{inspect.count}} 项异常</button>
+      <ion-icon style="position: relative;top:0.2rem;" color="primary" name="ios-arrow-forward-outline" item-end></ion-icon>
+    </ion-item>
+
+    <!-- 更多 -->
+    <a  *ngIf="renderData?.length > 3"
+      href="javascript:;" data-collapse="close"  class="more">更多↓</a>
+  </div>
+
+  <!-- 无数据 -->
+  <ion-item *ngIf="renderData != 'err' && renderData?.length == 0">
+    <p class="value-container"></p>
+  </ion-item>
+</ion-list>

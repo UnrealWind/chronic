@@ -1,0 +1,29 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>住院档案</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="breath-footer">
+  <!-- 基本信息 -->
+  <uv-base-info [type]="3" [xlData]="xlData"></uv-base-info>
+  <!-- 诊断信息 -->
+  <uv-exam-info [type]="3" [xlData]="xlData"></uv-exam-info>
+  <!-- 主诉 -->
+  <uv-complaint [xlData]="xlData"></uv-complaint>
+  <!-- 五史 -->
+  <uv-history [xlData]="xlData"></uv-history>
+  <!-- 体格信息 -->
+  <uv-physique [xlData]="xlData"></uv-physique>
+  <!-- 医嘱 -->
+  <uv-drug [type]="3" [xlData]="xlData"></uv-drug>
+  <!-- 检查信息 -->
+  <uv-test [xlData]="xlData"></uv-test>
+  <!-- 检验信息 -->
+  <uv-inspect [xlData]="xlData"></uv-inspect>
+  <!-- 手术 -->
+  <uv-operate [xlData]="xlData"></uv-operate>
+</ion-content>

@@ -1,0 +1,18 @@
+<!-- 门诊住院 主诉信息 -->
+<ion-list>
+  <ion-list-header>
+    <ion-icon name='ios-paper-outline' color="primary"></ion-icon>&nbsp;主诉信息
+  </ion-list-header>
+
+  <div *ngIf="renderData != 'err' && renderData?.length > 0">
+    <ion-item *ngFor="let item of renderData">
+      <h2 class="no-margin-top value-container">{{item.source}}</h2>
+    </ion-item>
+  </div>
+
+  <!-- 无数据 -->
+  <ion-item *ngIf="renderData != 'err' && renderData?.length == 0">
+    <p class="value-container"></p>
+  </ion-item>
+
+</ion-list>

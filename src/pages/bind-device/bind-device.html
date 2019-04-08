@@ -1,9 +1,15 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>绑定设备</ion-title>
+  </ion-navbar>
+</ion-header>
 
 <ion-content >
   <ion-list radio-group [(ngModel)]="params.type">
     <ion-list-header>
       <ion-icon name='planet' color="primary"></ion-icon> &nbsp;设备绑定
     </ion-list-header>
+
     <ion-item>
       <ion-label>设备绑定</ion-label>
       <ion-select [(ngModel)]="params.type" interface="action-sheet"  cancelText="返回">
@@ -12,12 +18,15 @@
       </ion-select>
     </ion-item>
 
-    <ion-item>
-      <ion-label floating>设备唯一编号：</ion-label>
-      <ion-input [(ngModel)]="params.deviceId" type="text"></ion-input>
-    </ion-item>
+    <form [formGroup]="deviceForm">
+      <ion-item>
+        <ion-label floating>设备唯一编号：</ion-label>
+        <ion-input formControlName="deviceId" [(ngModel)]="params.deviceId" type="text"></ion-input>
+      </ion-item>
+    </form>
+
   </ion-list>
 
-  <button ion-button block (click)="bind()">绑定</button>
+  <button ion-button block [disabled]="!deviceForm.controls.deviceId.valid" (click)="bind()">绑定</button>
 
 </ion-content>

@@ -1,0 +1,68 @@
+<!-- 门诊住院 五史信息 -->
+<ion-list>
+  <ion-list-header>
+    <ion-icon name='ios-paper-outline' color="primary"></ion-icon>&nbsp;历史信息
+  </ion-list-header>
+
+  <div *ngIf="renderData != 'err' && renderData?.length > 0">
+    <ion-item *ngIf="renderData[0]?.length > 0">
+      <h2 class="sup-title">既往史</h2>
+      <!-- 疾病史 -->
+      <dl class="sub-item clearfix">
+        <dt class="sub-item-title">疾病史</dt>
+        <dd class="sub-item-value value-container">{{renderData[0][0].value}}</dd>
+      </dl>
+
+      <!-- 药物史 -->
+      <dl class="sub-item clearfix">
+        <dt class="sub-item-title">药物史</dt>
+        <dd class="sub-item-value value-container">{{renderData[0][1].value}}</dd>
+      </dl>
+
+      <!-- 手术史 -->
+      <dl class="sub-item clearfix">
+        <dt class="sub-item-title">手术史</dt>
+        <dd class="sub-item-value value-container">{{renderData[0][2].value}}</dd>
+      </dl>
+    </ion-item>
+
+    <ion-item *ngIf="renderData[1]?.length > 0">
+      <h2 class="sup-title">个人史</h2>
+      <!-- 吸烟史 -->
+      <dl class="sub-item clearfix">
+        <dt class="sub-item-title">吸烟史</dt>
+        <dd class="sub-item-value value-container">{{renderData[1][0].value}}</dd>
+      </dl>
+
+      <!-- 饮酒史 -->
+      <dl class="sub-item clearfix">
+        <dt class="sub-item-title">饮酒史</dt>
+        <dd class="sub-item-value value-container">{{renderData[1][1].value}}</dd>
+      </dl>
+
+      <!-- 过敏史 -->
+      <dl class="sub-item clearfix">
+        <dt class="sub-item-title">过敏史</dt>
+        <dd class="sub-item-value value-container">{{renderData[1][2].value}}</dd>
+      </dl>
+    </ion-item>
+
+    <ion-item>
+      <h2 class="sup-title">婚育史</h2>
+      <ul *ngIf="renderData[2]?.length > 0" class="sub-item">
+        <li class="sub-item-title value-container" *ngFor="let item of renderData[2]">{{item.source}}</li>
+      </ul>
+
+      <p *ngIf="renderData[2]?.length == 0" class="value-container"></p>
+    </ion-item>
+
+    <ion-item>
+      <h2 class="sup-title">家族史</h2>
+      <ul *ngIf="renderData[3]?.length > 0" class="sub-item">
+        <li class="sub-item-title value-container" *ngFor="let item of renderData[3]">{{item.source}}</li>
+      </ul>
+
+      <p *ngIf="renderData[3]?.length == 0" class="value-container"></p>
+    </ion-item>
+  </div>
+</ion-list>

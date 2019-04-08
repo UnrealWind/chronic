@@ -1,20 +1,70 @@
 <ion-content >
-  <ion-list>
+  <ion-list *ngIf="detailData">
     <ion-list-header>
-      <ion-icon name='ios-paper-outline' color="primary"></ion-icon>&nbsp;胸部CT平扫: 未见异常
+      <ion-icon name='ios-paper-outline' color="primary"></ion-icon>&nbsp;{{detailData.exam_item}}
       <button ion-button round item-end (click)="back()">返回</button>
     </ion-list-header>
-    <ion-item >
+    <ion-grid padding>
+      <!-- 第一行 -->
+      <ion-row>
+        <ion-col>
+          <span>姓名：</span><span class="value-container">{{detailData.name}}</span>
+        </ion-col>
+        <ion-col>
+          <span>性别：</span><span class="value-container">{{detailData.sex_name}}</span>
+        </ion-col>
+        <ion-col>
+          <span>年龄：</span><span class="value-container">{{detailData.age}}</span>
+        </ion-col>
+      </ion-row>
+
+      <!-- 第二行 -->
+      <ion-row>
+        <ion-col>
+          <span>申请科室：</span><span class="value-container">{{detailData.dept_icu_name}}</span>
+        </ion-col>
+        <ion-col>
+          <span>检查设备：</span><span class="value-container">{{detailData.device}}</span>
+        </ion-col>
+      </ion-row>
+
+      <!-- 第三行 -->
+      <ion-row>
+        <ion-col>
+          <span>检查项目：</span><span class="value-container">{{detailData.exam_item}}</span>
+        </ion-col>
+      </ion-row>
+
+      <!-- 第四行 -->
+      <ion-row>
+        <ion-col>
+          <span>报告医师：</span><span class="value-container">{{detailData.technician}}</span>
+        </ion-col>
+        <ion-col>
+          <span>审核医师：</span><span class="value-container">{{detailData.verified_by}}</span>
+        </ion-col>
+      </ion-row>
+
+      <!-- 第五行 -->
+      <ion-row>
+        <ion-col>
+          <span>报告日期：</span><span class="value-container">{{detailData.report_date_time}}</span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+    <ion-item>
       <h2 class="no-margin-top">检查参数</h2>
-      <p style="white-space: normal">胸部CT平扫</p>
+      <p class="value-container" style="white-space: normal">{{detailData.exam_para}}</p>
     </ion-item>
     <ion-item >
       <h2 class="no-margin-top">检查所见</h2>
-      <p style="white-space: normal">1、双肺间质性肺炎。2、主动脉、冠脉粥样硬化；主动脉瓣、二尖瓣钙化。3、肝脏、左肾低密度灶，请结合腹部检查。</p>
+      <p class="value-container" style="white-space: normal">{{detailData.describe}}</p>
     </ion-item>
     <ion-item >
       <h2 class="no-margin-top">检查印象</h2>
-      <p style="white-space: normal">肺窗：双肺胸膜下区可见磨玻璃及网格影，部分区域可见蜂窝样改变。局部肺结构牵拉扭曲，并见牵拉性支气管、细支气管扩张。纵隔窗：纵隔内未见增大淋巴结。心脏形态未见明显增大，主动脉、冠脉可见多钙化斑块，主动脉瓣、二尖瓣钙化。扫及肝脏、左肾可见低密度灶。</p>
+      <p class="value-container" style="white-space: normal">{{detailData.impression}}</p>
     </ion-item>
   </ion-list>
 </ion-content>

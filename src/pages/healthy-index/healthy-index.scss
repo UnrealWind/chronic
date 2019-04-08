@@ -2,9 +2,7 @@ page-healthy-index {
   h2 {
     font-weight: 300;
   }
-  ion-list.list-ios {
-    margin-bottom:1.5rem;
-  }
+
   .healthData-wrapper {
     .healthData-row {
       border-bottom: 1px solid #ccc;
@@ -42,6 +40,16 @@ page-healthy-index {
     }
     .healthData-row:last-child {
       border-bottom:0;
+    }
+  }
+
+  .infi-list {
+    .plan-list-header {
+      margin-bottom: 0!important;
+    }
+    
+    .plan-list {
+      box-shadow: none!important;
     }
   }
 
